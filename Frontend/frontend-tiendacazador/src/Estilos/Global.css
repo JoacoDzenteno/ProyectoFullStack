@@ -1,0 +1,53 @@
+/* src/Global.css */
+
+:root {
+    --colorUso: #ec3030; /* Rojo principal */
+    --colorTexto: #000000; /* Negro para el texto */
+    --colorFondoBarra: #ffffff; /* Blanco para la barra */
+    --paddingBarra: 2rem 9%;
+}
+
+/* RESET Y ESTILOS BASE */
+[class*="fa-"] {
+    /* Asegura que el navegador use la fuente Font Awesome 
+       en lugar de la fuente genérica definida en el selector '*' o 'body'.
+       Usamos !important para asegurar la prioridad sobre reglas generales.
+    */
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", sans-serif !important;
+    font-weight: 900 !important; /* Generalmente los íconos 'fas' requieren font-weight 900 */
+margin: 5px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    transition: .2s linear;
+}
+
+html {
+    font-size: 62.5%; /* Base 10px */
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+    scroll-padding-top: 8rem; /* Añadir padding para que el navbar fijo no tape el contenido */
+}
+
+/* ESTILOS DEL CUERPO */
+body {
+    /* Asegúrate de que esta ruta sea válida desde la carpeta 'public' */
+    /* Ejemplo: si la imagen está en public/img/fondo.png, la ruta es /img/fondo.png */
+    /* Usando la ruta de tu CSS original como ejemplo, asumiendo que Imagemes está en 'public' */
+    background: url(/Imagenes/fondoPagedit.PNG) repeat; 
+    min-height: 100vh; /* Asegura que el body ocupe al menos toda la altura de la vista */
+}
+
+/* Estilo para que el contenido principal no quede detrás del navbar fijo */
+/* Debes envolver todo el contenido de <App> (debajo del <Encabezado>) con una etiqueta <main className="content-wrapper"> */
+.content-wrapper {
+    /* Ajusta este valor si tu barra es más alta o más baja */
+    margin-top: 9rem; 
+}

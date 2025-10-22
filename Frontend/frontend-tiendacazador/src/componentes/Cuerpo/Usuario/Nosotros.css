@@ -1,0 +1,88 @@
+/* src/componentes/Cuerpo/Usuario/Nosotros.css */
+
+/* 1. Título General (NosotrosTt) */
+.nosotros {
+    padding-top: 5rem; /* Asegura un buen espacio debajo del navbar */
+    padding-bottom: 5rem;
+}
+
+.nosotrosTt {
+    box-shadow: 0 0.5rem 1.5rem #000000;
+    border-radius: 2rem;
+    text-align: center;
+    font-size: 4rem;
+    color: var(--colorTexto, #000000);
+    padding: 1rem;
+    margin: 2rem 0;
+    background: #f6f6f6;
+    font-weight: bold;
+}
+
+.nosotrosTt span {
+    color: var(--colorUso, #ec3030);
+    -webkit-text-stroke: 0.9px var(--colorTexto, #000000);
+}
+
+/* 2. Sección Principal (Video + Contenido) */
+.seccionNs {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-wrap: wrap; /* Permite que las columnas se apilen en móvil */
+    padding: 2rem 0;
+} 
+
+/* 3. Estilos del Video */
+.videoNs {
+    flex: 1 1 40rem; /* Ocupa al menos 400px o el espacio disponible */
+    position: relative;
+    text-align: center; /* Centra el contenido en esta columna */
+}
+
+.videoNs .video-player {
+    width: 75%;
+    border: 1.5rem solid #ffffff;
+    border-radius: .5rem;
+    box-shadow: 1rem 1rem var(--colorUso, rgb(255, 0, 0));
+    object-fit: cover;
+}
+
+.videoNs h3 {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 12.5%; /* Centra el texto sobre el 75% del ancho del video */
+    font-size: 3rem;
+    background: #ffffff;
+    width: 75%;
+    padding: 1rem 2rem;
+    text-align: center;
+    mix-blend-mode: screen; /* Efecto de superposición */
+}
+
+.videoNs h3 span {
+    color: var(--colorUso, #ec3030);
+}
+
+/* 4. Estilos del Contenido */
+.contenidoNs {
+    flex: 1 1 60rem; /* Ocupa al menos 600px o el espacio restante */
+    padding-top: 1rem;
+}
+
+.contenidoNs h3 {
+    font-size: 3rem;
+    color: var(--colorTexto, #242323);
+    -webkit-text-stroke: 0.15px rgb(255, 255, 255);
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.contenidoNs p {
+    font-size: 1.8rem;
+    color: var(--colorTexto, #242323);
+    -webkit-text-stroke: 0.15px rgb(255, 255, 255);
+    padding: .5rem 0;
+    line-height: 1.5;
+    font-weight: bold;
+}
