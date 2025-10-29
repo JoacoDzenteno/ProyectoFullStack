@@ -1,14 +1,10 @@
-// En: src/vistas/Nosotros.jsx
-
 import React from 'react';
-// (Asegúrate de que esta ruta a 'estructura' sea la tuya)
 import { BarraNavegacion } from '../componentes/estructura/BarraNavegacion/BarraNavegacion.jsx';
 import { PiePagina } from '../componentes/estructura/PiePagina/PiePagina.jsx';
 import fullstack from '../recursos/imagenes/fullstack.mp4';
 
 export function Nosotros() {
   return (
-    // Usamos el layout de página pública
     <div className="layout-pagina">
       <BarraNavegacion />
 
@@ -21,7 +17,6 @@ export function Nosotros() {
           <div className="seccionNs"> 
 
             <div className="videoNs">
-              {/* Atributos de video actualizados para React: 'autoPlay', 'muted' */}
               <video src={fullstack} loop autoPlay muted controls={false}></video>
               <h3>Productos <span>100%</span> originales</h3>
             </div>

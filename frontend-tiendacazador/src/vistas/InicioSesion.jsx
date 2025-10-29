@@ -1,13 +1,8 @@
-// En: src/vistas/InicioSesion.jsx
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexto/AuthContexto.jsx'; 
-// 1. Importamos el servicio y el 'Alert' para errores
 import { loginServicio } from '../servicios/authServicio.js'; 
 import { Container, Form, Button, Card, Alert } from 'react-bootstrap'; 
-
-// (Asegúrate que esta ruta a 'layout' sea la tuya, a veces usas 'estructura')
 import { BarraNavegacion } from '../componentes/estructura/BarraNavegacion/BarraNavegacion.jsx';
 import { PiePagina } from '../componentes/estructura/PiePagina/PiePagina.jsx';
 import './InicioSesion.css';
@@ -17,36 +12,29 @@ export function InicioSesion() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  // Estados para manejar errores y carga
-  const [error, setError] = useState(''); // Para guardar el mensaje de error
-  const [cargando, setCargando] = useState(false); // Para deshabilitar el botón
+ 
+  const [error, setError] = useState(''); 
+  const [cargando, setCargando] = useState(false); 
 
   const { login } = useAuth(); 
   const navigate = useNavigate(); 
 
   const manejarLogin = async (e) => {
     e.preventDefault(); 
-    setError(''); // Limpiamos errores antiguos
-    setCargando(true); // Deshabilitamos el botón
+    setError('');
+    setCargando(true); 
 
     try {
-      // Llamamos al servicio (que tarda 1 seg)
       const datosUsuario = await loginServicio(email, password);
       
-      // Si el servicio tuvo ÉXITO
-      login(datosUsuario); // Guardamos la sesión
-      navigate('/admin/panel'); // Redirigimos
+      login(datosUsuario); 
+      navigate('/admin/panel'); 
 
     } catch (errorCapturado) {
       
-      // --- ESTE ES EL FLUJO DE ERROR ---
-      // Si el servicio falló (ej. contraseña '1235')
       console.error("Error en login:", errorCapturado.message);
-      // 1. Mostramos el error
       setError(errorCapturado.message); 
-      // 2. Volvemos a activar el botón
       setCargando(false); 
-      // --- ¡Y NO HAY REDIRECCIÓN! ---
     }
   };
 
@@ -63,9 +51,6 @@ export function InicioSesion() {
                 </Card.Title>
                 
                 <Form onSubmit={manejarLogin}>
-                  
-                  {/* --- AQUÍ SE MUESTRA EL ERROR --- */}
-                  {/* Mostramos el 'Alert' solo si la variable 'error' tiene texto */}
                   {error && <Alert variant="danger">{error}</Alert>}
                   
                   <Form.Group className="mb-3" controlId="formBasicEmail">
@@ -91,7 +76,6 @@ export function InicioSesion() {
                   </Form.Group>
 
                   <div className="d-grid">
-                    {/* Deshabilitamos el botón si está "cargando" */}
                     <Button 
                       variant="primary" 
                       type="submit" 

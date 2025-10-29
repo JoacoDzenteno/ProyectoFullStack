@@ -1,12 +1,8 @@
- /* En: src/vistas/admin/productos/ListaProductos.css */
-
-/* 1. Ajustes generales de la tabla (igual que la de usuarios) */
 .table {
   font-size: 1.4rem;
   vertical-align: middle;
 }
 
-/* 2. Centra los botones de "Acciones" */
 .table tbody td:last-child {
   display: flex;
   justify-content: center;
@@ -14,9 +10,8 @@
   white-space: nowrap;
 }
 
-/* 3. Estilo para el stock crítico */
 .stock-critico {
-  color: #a00; /* Rojo oscuro */
+  color: #a00;
   font-weight: bold;
-  background-color: #fdd; /* Fondo rosado claro */
+  background-color: #fdd;
 }

@@ -1,13 +1,9 @@
-// En: src/vistas/Registro.jsx
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Container, Form, Button, Card, Alert, Row, Col } from 'react-bootstrap';
-// (Usa tu ruta correcta a 'estructura')
 import { BarraNavegacion } from '../componentes/estructura/BarraNavegacion/BarraNavegacion.jsx';
 import { PiePagina } from '../componentes/estructura/PiePagina/PiePagina.jsx';
 
-// 1. Importamos la lógica y datos que movimos
 import {
   regiones,
   comunasPorRegion,
@@ -19,15 +15,12 @@ import {
   validarContrasena
 } from '../recursos/datos/registroFormDatos.js';
 
-// 2. Importamos el servicio de registro
 import { registroServicio } from '../servicios/usuarioServicio.js';
 
-// Usamos el mismo CSS de Login para centrar
 import './InicioSesion.css'; 
 
 export function Registro() {
   
-  // 3. Estados para CADA campo del formulario
   const [rut, setRut] = useState('');
   const [nombre, setNombre] = useState('');
   const [apellidos, setApellidos] = useState('');
@@ -36,33 +29,24 @@ export function Registro() {
   const [password, setPassword] = useState('');
   const [region, setRegion] = useState('');
   const [comuna, setComuna] = useState('');
-  // (Omitimos 'fechaNac' por ahora, ya que tu JS decía '|| null')
-
-  // Estado para la lista dinámica de comunas
   const [comunas, setComunas] = useState([]);
   
-  // Estados de control
   const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
   const navigate = useNavigate();
 
-  // 4. Lógica de React para manejar el cambio de Región
   const handleRegionChange = (e) => {
     const regionSeleccionada = e.target.value;
     setRegion(regionSeleccionada);
-    // Actualizamos la lista de comunas
     setComunas(comunasPorRegion[regionSeleccionada] || []);
-    // Reseteamos la comuna seleccionada
     setComuna(''); 
   };
 
-  // 5. 'handleSubmit' (reemplaza tu 'eventListener')
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setCargando(true);
 
-    // --- 6. Validaciones (Usando tus funciones) ---
     if (!validarRut(rut)) {
       setError("El RUT ingresado no es válido. (Sin puntos ni guion)");
       setCargando(false);
@@ -99,18 +83,15 @@ export function Registro() {
       return;
     }
 
-    // --- 7. Llamada al Servicio ---
     try {
       const datosUsuario = { rut, nombre, apellidos, correo, direccion, password, region, comuna };
       
       await registroServicio(datosUsuario);
       
-      // ¡Éxito!
       alert("¡Registro exitoso! Serás redirigido al Login.");
       navigate('/login');
 
     } catch (err) {
-      // Si el servicio 'reject' (ej. correo duplicado)
       setError(err.message);
     } finally {
       setCargando(false);
@@ -121,7 +102,6 @@ export function Registro() {
     <div className="layout-pagina">
       <BarraNavegacion />
       <main className="contenido-principal">
-        {/* Usamos el mismo layout de tarjeta que InicioSesion.jsx */}
         <div className="contenedor-login"> 
           <Container>
             <Card className="shadow-lg login-card mx-auto" style={{maxWidth: '800px'}}>

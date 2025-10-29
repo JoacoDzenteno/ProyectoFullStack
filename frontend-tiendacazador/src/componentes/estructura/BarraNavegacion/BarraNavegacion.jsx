@@ -1,16 +1,16 @@
 import React from 'react';
-// CAMBIO 1: Importamos 'NavDropdown'
 import { Navbar, Nav, Container, Badge, NavDropdown } from 'react-bootstrap';
-
+import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
-// Nombramos los íconos para claridad
-const iconoUsuario = faUser;
-const iconoCarrito = faShoppingCart;
+import { useCarrito } from '../../../contexto/CarritoContexto';
 
 export function BarraNavegacion() {
   
+  const { carrito } = useCarrito();
+  const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
   return (
     <Navbar 
       bg="light" 
@@ -20,52 +20,52 @@ export function BarraNavegacion() {
       className="shadow-sm" 
     >
       <Container>
-        
-        <Navbar.Brand href="/">
-          Tienda<span>X</span>del<span>X</span>cazador
-        </Navbar.Brand>
+        <LinkContainer to="/">
+          <Navbar.Brand>
+            Tienda<span>X</span>del<span>X</span>cazador
+          </Navbar.Brand>
+        </LinkContainer>
 
         <Navbar.Toggle aria-controls="menu-principal-colapsable" />
 
         <Navbar.Collapse id="menu-principal-colapsable">
           
           <Nav className="me-auto"> 
-            <Nav.Link href="/">Home</Nav.Link>
-            <Nav.Link href="/productos">Productos</Nav.Link>
-            <Nav.Link href="/nosotros">Nosotros</Nav.Link>
-            <Nav.Link href="/contacto">Contacto</Nav.Link>
-            <Nav.Link href="/blogs">Blogs</Nav.Link>
+            <LinkContainer to="/"><Nav.Link>Home</Nav.Link></LinkContainer>
+            <LinkContainer to="/productos"><Nav.Link>Productos</Nav.Link></LinkContainer>
+            <LinkContainer to="/nosotros"><Nav.Link>Nosotros</Nav.Link></LinkContainer>
+            <LinkContainer to="/contacto"><Nav.Link>Contacto</Nav.Link></LinkContainer>
+            <LinkContainer to="/blogs"><Nav.Link>Blogs</Nav.Link></LinkContainer>
           </Nav>
 
           <Nav className="ms-auto">
-            
-            {/* --- CAMBIO 2: Reemplazamos el Nav.Link por NavDropdown --- */}
             <NavDropdown 
-              // El 'title' (título) del dropdown será el ícono de usuario
-              title={<FontAwesomeIcon icon={iconoUsuario} />} 
+              title={<FontAwesomeIcon icon={faUser} />} 
               id="menu-usuario-dropdown"
-              align="end" // Alinea el menú a la derecha para que no se salga
+              align="end" 
             >
-              <NavDropdown.Item href="/login">Iniciar Sesión</NavDropdown.Item>
-              <NavDropdown.Item href="/registro">Registro</NavDropdown.Item>
+              <LinkContainer to="/login">
+                <NavDropdown.Item>Iniciar Sesión</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to="/registro">
+                <NavDropdown.Item>Registro</NavDropdown.Item>
+              </LinkContainer>
             </NavDropdown>
-            {/* --- Fin del Cambio --- */}
 
-
-            {/* El ícono del carrito se queda igual */}
-            <Nav.Link href="/carrito" className="position-relative">
-              <FontAwesomeIcon icon={iconoCarrito} />
-              
-              <Badge 
-                pill       
-                bg="danger"
-                className="position-absolute top-0 start-100 translate-middle"
-                style={{ fontSize: '0.6em' }} 
-              >
-                0
-              </Badge>
-            </Nav.Link>
-
+            <LinkContainer to="/carrito">
+              <Nav.Link className="position-relative"> 
+                <FontAwesomeIcon icon={faShoppingCart} />
+                {totalItems > 0 && (
+                  <Badge 
+                    pill 
+                    bg="danger" 
+                    className="carrito-badge"
+                  >
+                    {totalItems}
+                  </Badge>
+                )}
+              </Nav.Link>
+            </LinkContainer>
           </Nav>
         </Navbar.Collapse>
       </Container>

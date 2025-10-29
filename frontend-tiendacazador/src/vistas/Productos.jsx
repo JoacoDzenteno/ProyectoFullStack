@@ -1,13 +1,10 @@
-// En: src/vistas/Productos.jsx
-
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-// (Usa tu ruta correcta a 'estructura')
 import { BarraNavegacion } from '../componentes/estructura/BarraNavegacion/BarraNavegacion.jsx';
 import { PiePagina } from '../componentes/estructura/PiePagina/PiePagina.jsx';
 import { Spinner, Alert } from 'react-bootstrap';
-// 1. Importamos el servicio
 import { getProductosServicio } from '../servicios/productoServicio.js';
+import { useCarrito } from '../contexto/CarritoContexto.jsx';
 
 export function Productos() {
 
@@ -15,7 +12,7 @@ export function Productos() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState('');
 
-  // 2. Cargamos los productos al montar la página
+  const { agregarAlCarrito } = useCarrito();
   useEffect(() => {
     const cargarProductos = async () => {
       try {
@@ -30,10 +27,12 @@ export function Productos() {
     cargarProductos();
   }, []);
 
-  // (Simulación de "Agregar al Carrito")
-  const agregarAlCarrito = (e) => {
-    e.preventDefault(); // Evita que el link '#' recargue
-    alert("¡Producto añadido al carrito! (Simulación)");
+  const handleAgregarAlCarrito = (e, producto) => {
+    e.preventDefault(); 
+    
+    agregarAlCarrito(producto, 1);
+    
+    alert(`¡${producto.nombre} añadido al carrito!`);
   };
 
   return (
@@ -44,7 +43,6 @@ export function Productos() {
         <section className="productos" id="productos">
           <h1 className="titulosPg">Productos</h1>
           
-          {/* 3. Manejo de Carga y Errores */}
           {cargando && (
             <div className="text-center p-5"><Spinner animation="border" /></div>
           )}
@@ -52,22 +50,19 @@ export function Productos() {
             <Alert variant="danger" className="m-3">{error}</Alert>
           )}
 
-          {/* 4. Renderizamos los productos usando tu HTML como plantilla */}
           {!cargando && !error && (
             <div className="contenedorPr">
               
               {productos.map((producto) => (
                 <div className="caja" key={producto.id}>
                   <div className="imagenPr">
-                    
-                    {/* El link ahora apunta a la ruta dinámica del producto */}
                     <Link to={`/producto/${producto.id}`}>
-                      {/* Usamos la URL de la imagen del servicio */}
                       <img src={producto.imagen} alt={producto.nombre} />
                     </Link>
                     
                     <div className="iconos">
-                      <a href="#" className="cart-btn" onClick={agregarAlCarrito}>
+                      <a href="#" className="cart-btn" onClick={(e) => handleAgregarAlCarrito(e, producto)}
+                      >
                         Agregar al carro 🛒
                       </a>
                     </div> 

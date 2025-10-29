@@ -1,28 +1,13 @@
-/*
- * ===============================================
- * ARCHIVO: ListaUsuarios.css
- * ===============================================
- * Estilos específicos para la tabla de ListaUsuarios
- * ===============================================
- */
-
-/* 1. Mejora la legibilidad general de la tabla */
 .table {
-  /* Hacemos la letra un poco más grande (14px) */
   font-size: 1.4rem;
-  /* Centra todo verticalmente dentro of las celdas */
   vertical-align: middle;
 }
 
-/* 2. Centra los botones de "Acciones" (Editar/Borrar) */
 .table tbody td:last-child {
   text-align: center;
-  /* Evita que los botones se partan en dos líneas */
   white-space: nowrap;
 }
 
-/* 3. Pone el spinner de "Cargando..." de tu color rojo */
 .table .spinner-border {
-  /* Usa la variable global que definimos en global.css */
   color: var(--colorUso);
 }

@@ -1,5 +1,3 @@
-// En: src/vistas/Blogs.jsx
-
 import React from 'react';
 import { BarraNavegacion } from '../componentes/estructura/BarraNavegacion/BarraNavegacion.jsx';
 import { PiePagina } from '../componentes/estructura/PiePagina/PiePagina.jsx';
@@ -8,14 +6,11 @@ import imgSorteo2 from '../recursos/imagenes/sorteo 2.png';
 
 export function Blogs() {
   return (
-    // Usamos el layout de página pública
     <div className="layout-pagina">
       <BarraNavegacion />
 
       <main className="contenido-principal">
         
-        {/* --- Tu código HTML, adaptado a JSX --- */}
-        {/* (Corregido de 'secion' a 'section') */}
         <section className="Sorteos">
           <h1 className="titulosPg">Sorteos</h1>
 
@@ -27,9 +22,7 @@ export function Blogs() {
                 <p>En este live de instagram hicimos un sorteo por medio de kahoot y seleccionamos a 3 ganadores</p>
               </div>
               <div className="imgSorteo">
-                {/* Los links a Instagram se abren en una pestaña nueva */}
                 <a href="https://www.instagram.com/p/C6kaZfYt5Li/" target="_blank" rel="noopener noreferrer">
-                  {/* Usamos la imagen importada */}
                   <img src={imgSorteo1} alt="Sorteo 1" />
                 </a>
               </div>
@@ -43,7 +36,6 @@ export function Blogs() {
               </div>
               <div className="imgSorteo">
                 <a href="https://www.instagram.com/p/C3votrGvPNi/" target="_blank" rel="noopener noreferrer">
-                  {/* Usamos la imagen importada */}
                   <img src={imgSorteo2} alt="Sorteo 2" />
                 </a>
               </div>

@@ -1,5 +1,3 @@
-// En: src/vistas/Contacto.jsx
-
 import React from 'react';
 import { BarraNavegacion } from '../componentes/estructura/BarraNavegacion/BarraNavegacion.jsx';
 import { PiePagina } from '../componentes/estructura/PiePagina/PiePagina.jsx';
@@ -20,7 +18,7 @@ export function Contacto() {
         
         <section className="contacto" id="contacto">
 
-          <h1 className="tituloCont">Contáctanos</h1>
+          <h1 className="tituloCont">Contacto</h1>
             
           <div className="seccionCont">
             

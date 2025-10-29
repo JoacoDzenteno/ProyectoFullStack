@@ -2,14 +2,12 @@
   --colorUso: #ec3030;
 }
 
-/* -----------------------------------------------------------------------
-  1. ESTILOS BASE Y DE FONDO
------------------------------------------------------------------------
+/* Base y fondo
 */
 body {
   background: url(../imagenes/fondoPagedit.PNG) repeat;
-  /* Espacio superior para la barra de navegación FIJA */ 
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -20,20 +18,32 @@ body {
   text-decoration: none;
   transition: 0.2s linear;
 }
+
 html {
-  font-size: 62.5%; /* Esto es para que 1rem = 10px */
+  font-size: 90%; 
   scroll-behavior: smooth;
   scroll-padding-top: 6rem;
   overflow-x: hidden;
 }
+
 section {
   padding: 2rem 9%;
 }
 
-/* -----------------------------------------------------------------------
-  2. ESTILOS PARA LA PÁGINA 'Inicio.jsx'
------------------------------------------------------------------------
-*/
+/* Layout de la pagina */
+.layout-pagina {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.contenido-principal {
+  flex-grow: 1; 
+  padding-top: 10rem;
+}
+
+/* Inicio */
+
 .home .btn {
   display: inline-block;
   margin-top: 1rem;
@@ -50,26 +60,28 @@ section {
 .home {
   display: flex;
   align-items: center;
-  background-size: cover;
-  background-position: center;
-  margin-bottom: 0;
-  /* Damos espacio interno en lugar de márgenes */
-  padding-top: 4rem;
+  justify-content: center; 
+  flex-wrap: wrap; 
+  gap: 2rem; 
   padding-bottom: 4rem;
+  flex-grow: 1; 
 }
-.home .contenido {
-  max-height: 50rem;
+
+.home .contenido { 
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  flex: 1 1 40rem; 
+  max-width: 60rem; 
 }
+
 .home .contenido h3 {
   font-size: 6rem;
   -webkit-text-stroke: 2px #ffffff;
   color: #000000;
-  text-align: justify;
 }
+
 .home .contenido span {
   font-size: 2.5rem;
   font-weight: bold;
@@ -78,8 +90,8 @@ section {
   padding: 1rem 1rem;
   line-height: 1.5;
   display: block;
-  text-align: justify;
 }
+
 .home .contenido p {
   font-size: 1.8rem;
   color: #242323;
@@ -87,12 +99,13 @@ section {
   padding: 1rem 0;
   line-height: 1.5;
   font-weight: bold;
-  text-align: justify;
-  margin-right: 2rem;
 }
+
 .contenedorImagen {
-  flex-shrink: 0;
+  flex: 1 1 40rem; 
+  text-align: center;
 }
+
 #imagenportada {
   max-width: 405px;
   width: 100%;
@@ -100,25 +113,22 @@ section {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 2);
 }
 
-/* -----------------------------------------------------------------------
-  INICIO: ESTILOS PARA LA PÁGINA 'Nosotros.jsx'
-  (Pegar después de los estilos de .home)
------------------------------------------------------------------------
-*/
+/* Nosotros */
 
-/* Sección de nosotros */
 .nosotros {
-  backdrop-filter: blur(5px);
+  margin-top: -100px;
 }
 .nosotrosTt {
-  box-shadow: 0 0.5rem 1.5rem #000000;
-  border-radius: 2rem;
   text-align: center;
   font-size: 4rem;
   color: #000000;
   padding: 1rem;
   margin: 2rem 0;
-  background: #f6f6f6;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0.5rem 1.5rem #000000;
+  border-radius: 2rem;
+  border: 0.1rem solid #000000;
+  -webkit-text-stroke: 2px #ffffff;
 }
 .nosotrosTt span {
   color: var(--colorUso);
@@ -173,42 +183,42 @@ section {
   font-weight: bold;
 }
 
-/* -----------------------------------------------------------------------
-  FIN: ESTILOS 'Nosotros.jsx'
------------------------------------------------------------------------
-*/
+/* Contacto*/
 
-/* -----------------------------------------------------------------------
-  INICIO: ESTILOS PARA LA PÁGINA 'Contacto.jsx'
-  (Pegar después de los estilos de .nosotros)
------------------------------------------------------------------------
-*/
-
-/* Vista contacto */
 .contacto {
-  margin-top: 5rem;
+  margin-top: -100px;
+
 }
+
 .contacto .seccionCont {
   display: flex;
-  flex-wrap: wrap;
-  gap: 1.5rem;
+  flex-wrap: wrap; 
+  gap: 2.5rem; 
+  justify-content: center;
+  align-items: center;
 }
+
 .contacto .seccionCont form {
-  flex: 1 1 40rem;
+  flex: 1 1 40rem; 
   padding: 2rem 2.5rem;
   box-shadow: 0 0.5rem 1.5rem black;
   border: 0.5rem solid black;
   background: #f6f6f6;
   border-radius: 0.5rem;
 }
+
 .contacto .seccionCont .imagen {
-  flex: 0.5 1 30rem;
+  flex: 1 1 30rem; 
+  text-align: center; 
 }
+
 .contacto .seccionCont img {
-  margin-left: 120px;
-  width: 50%;
-  border-radius: 50px;
+  width: 100%;
+  max-width: 500px; 
+  height: auto; 
+  border-radius: 50px; 
 }
+
 .contacto .seccionCont form .box {
   padding: 1rem;
   font-size: 1.7rem;
@@ -219,54 +229,47 @@ section {
   margin: 0.7rem 0;
   width: 100%;
 }
+
 .contacto .seccionCont form .box:focus {
   border-color: var(--colorUso);
 }
+
 .contacto .seccionCont form textarea {
   height: 15rem;
   resize: none;
 }
+
 .contacto .tituloCont {
-  box-shadow: 0 0.5rem 1.5rem #000000;
-  border-radius: 2rem;
   text-align: center;
   font-size: 4rem;
   color: #000000;
   padding: 1rem;
   margin: 2rem 0;
-  background: #f6f6f6;
+  backdrop-filter: blur(5px);
+  box-shadow: 0 0.5rem 1.5rem #000000;
+  border-radius: 2rem;
+  border: 0.1rem solid #000000;
+  -webkit-text-stroke: 2px #ffffff;
 }
 
-/* --- ESTILO PARA EL BOTÓN DE "ENVIAR MENSAJE" --- */
-/* (Copiado de tu '.btn' original para que se vea igual) */
 .btn-contacto {
   display: inline-block;
   margin-top: 1rem;
   border-radius: 5rem;
   background: url(../imagenes/botoned.jpg) round;
   color: #f80000;
-  padding: 2rem 2.5rem; /* Un poco más pequeño que el del home */
+  padding: 2rem 2.5rem;
   cursor: pointer;
   font-size: 1.7rem;
   font-weight: bold;
   -webkit-text-stroke: 0.9px #000000;
-  /* (Asegúrate que 'botoned.jpg' esté en 'public/imagenes/') */
 }
 
-/* -----------------------------------------------------------------------
-  FIN: ESTILOS 'Contacto.jsx'
------------------------------------------------------------------------
-*/
+/* Blogs */
 
-/* -----------------------------------------------------------------------
-  INICIO: ESTILOS PARA LA PÁGINA 'Blogs.jsx'
-  (Pegar después de los estilos de .contacto)
------------------------------------------------------------------------
-*/
-
-/* Vista de blogs */
 .Sorteos {
   padding: 20px;
+  margin-top: -100px;
 }
 .titulosPg {
   text-align: center;
@@ -275,7 +278,6 @@ section {
   padding: 1rem;
   margin: 2rem 0;
   backdrop-filter: blur(5px);
-  margin-top: 8rem;
   box-shadow: 0 0.5rem 1.5rem #000000;
   border-radius: 2rem;
   border: 0.1rem solid #000000;
@@ -326,26 +328,12 @@ hr {
   margin: 20px 0;
 }
 
-/* -----------------------------------------------------------------------
-  FIN: ESTILOS 'Blogs.jsx'
------------------------------------------------------------------------
-*/
+/* Productos*/
 
-/* -----------------------------------------------------------------------
-  INICIO: ESTILOS 'Productos.jsx' y 'ProductoEspecifico.jsx'
-  (Pegar después de los estilos de .blogs)
------------------------------------------------------------------------
-*/
-
-/* --- Estilos de la PÁGINA DE LISTA DE PRODUCTOS --- */
 .productos {
-  /* min-height: 100vh; (Lo quitamos, ya lo maneja el layout) */
-  background: url(../imagenes/fondoPagedit.PNG) repeat;
-  background-size: auto;
-  background-position: center;
+  margin-top: -100px;
 }
-/* (La clase .titulosPg ya la habíamos añadido para 'Blogs', 
-   así que se reutilizará automáticamente. ¡Perfecto!) */
+
 .productos .contenedorPr{
   display: flex;
   flex-wrap: wrap;
@@ -410,7 +398,8 @@ hr {
   text-decoration: none;
 }
 
-/* --- Estilos de la PÁGINA DE DETALLE DE PRODUCTO --- */
+/* DetalleProducto*/
+
 #detallesProd{
   display: flex;
   justify-content: space-evenly;
@@ -498,55 +487,64 @@ hr {
   -webkit-text-stroke: 0.3px rgb(255, 255, 255);
 }
 
-/* -----------------------------------------------------------------------
-  FIN: ESTILOS DE PRODUCTOS
------------------------------------------------------------------------
-*/
+/* PiePagina */
 
-
-/* -----------------------------------------------------------------------
-  3. ESTILOS PARA 'PiePagina.jsx'
------------------------------------------------------------------------
-*/
 .piePagina {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap; 
+  gap: 2rem; 
   padding: 20px;
   background-color: #000000;
-  /* 'margin-top: auto' es reemplazado por el Sticky Footer */
 }
-.izq {
-  width: 30%;
-}
+
 .izq img {
   max-width: 150px;
 }
+
 .imgCont {
   display: flex;
   gap: 20px;
 }
+
 .imgCont a {
   display: inline-block;
   line-height: 0;
 }
+
 .imgCont img {
   width: 40px;
   height: 40px;
   object-fit: contain;
 }
+
 .piePagina p {
   font-size: 1rem;
   color: #ffffff;
   font-weight: bolder;
+  margin: 0; 
 }
+
 .piePagina p span {
   color: #ff0000;
 }
 
-/* -----------------------------------------------------------------------
-  4. CORRECCIONES PARA 'BarraNavegacion' (Bootstrap)
------------------------------------------------------------------------
+@media (max-width: 768px) {
+  .piePagina {
+    flex-direction: column; 
+    justify-content: center; 
+  }
+  
+  .izq {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+  }
+}
+
+/* Barra de navegación
 */
 .navbar-light .navbar-nav .nav-link:hover {
   color: var(--colorUso) !important;
@@ -555,21 +553,77 @@ hr {
   color: #ff0000 !important;
 }
 
-/* -----------------------------------------------------------------------
-  5. SOLUCIÓN STICKY FOOTER (LA ÚNICA QUE DEBE HABER)
------------------------------------------------------------------------
-*/
-
-/* 1. El 'layout-pagina' (el <div> que envuelve tus VISTAS)
-      usará flexbox y medirá COMO MÍNIMO el alto de la pantalla */
-.layout-pagina {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* 100% del Alto de la Ventana */
+.icono-link {
+  position: relative;
+  padding: 0.5rem 1rem;
 }
 
-/* 2. El 'contenido-principal' (el <main>) crecerá para 
-      ocupar todo el espacio vacío que sobre */
-.contenido-principal {
-  flex-grow: 1; /* Esto empuja el footer hacia abajo */
+.carrito-badge {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  font-size: 0.7em;
+  padding: 0.3em 0.5em;
+}
+
+/* Carrito */
+
+.carrito-container {
+  padding-top: 2rem;
+  padding-bottom: 4rem;
+  background: url(../imagenes/fondoPagedit.PNG) repeat;
+  background-size: auto;
+  background-position: center;
+  min-height: 80vh; 
+}
+
+.carrito-tabla {
+  font-size: 1.5rem;
+  vertical-align: middle;
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(5px);
+  border-radius: 10px;
+}
+
+.carrito-img {
+  width: 70px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+.carrito-nombre {
+  font-weight: 600;
+  color: #333;
+}
+
+.carrito-tabla td:last-child {
+  text-align: center;
+}
+
+.resumen-carrito {
+  background-color: #f8f9fa;
+  border: 1px solid #dee2e6;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+}
+
+.resumen-carrito h3 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  border-bottom: 2px solid #ddd;
+  padding-bottom: 1rem;
+}
+
+.resumen-total {
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 2rem;
 }

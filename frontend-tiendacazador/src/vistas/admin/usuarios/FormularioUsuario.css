@@ -1,6 +1,6 @@
 .formulario-usuario-card {
-  max-width: 700px; /* Limita el ancho del formulario */
-  margin: 0 auto; /* Lo centra en la página */
+  max-width: 700px; 
+  margin: 0 auto; 
 }
 
 .formulario-usuario-card .form-label {

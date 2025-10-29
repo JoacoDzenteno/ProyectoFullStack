@@ -1,7 +1,3 @@
-// En: src/recursos/datos/registroFormDatos.js
-
-// --- 1. DATOS (Dominios, Regiones, Comunas) ---
-
 export const dominiosValidos = ["@duocuc.cl", "@gmail.com", "@profesor.duoc.cl"];
 
 export const regiones = ["Región Metropolitana de Santiago", "Región de Arica y Parinacota", "Región de Tarapacá", "Región de Antofagasta", "Región de Atacama", "Región de Coquimbo", "Región de Valparaíso", "Región de O'Higgins", "Región del Maule", "Región del Ñuble", "Región del Biobío", "Región de la Araucanía", "Región de los Ríos", "Región de los Lagos", "Región de Aysén", "Región de Magallanes"];
@@ -41,9 +37,6 @@ export const comunasPorRegion = {
   "Región de Aysén": aysen,
   "Región de Magallanes": magallanes
 };
-
-// --- 2. FUNCIONES DE VALIDACIÓN ---
-// (Tu código, 100% reutilizado)
 
 export function validarRut(rut) {
   const rutSinPuntosGuion = /^[0-9]{7,8}[0-9kK]$/;

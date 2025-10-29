@@ -1,6 +1,3 @@
-// En: src/servicios/productoServicio.js
-
-// --- SIMULACIÓN DE BASE DE DATOS DE PRODUCTOS ---
 const productosFalsos = [
   {
     id: 101,
@@ -9,9 +6,7 @@ const productosFalsos = [
     precio: 35000,
     stock: 25,
     categoria: "Figuras",
-    // --- CAMPO NUEVO ---
     imagen: "/imagenes/productos/hunter/1MachiKomacine.png",
-    // (Para el detalle, usaremos estos)
     imagenesGaleria: [
       "/imagenes/productos/hunter/1MachiKomacine.png",
       "/imagenes/productos/hunter/1.1MachiKomacine.png",
@@ -29,7 +24,6 @@ const productosFalsos = [
     precio: 24990,
     stock: 15,
     categoria: "Figuras",
-    // --- CAMPO NUEVO ---
     imagen: "/imagenes/productos/hunter/2Shalnark.png",
     imagenesGaleria: ["/imagenes/productos/hunter/2Shalnark.png"],
     descripcionDetallada: ["Figura de Shalnark", "Nueva", "12cm"]
@@ -41,7 +35,6 @@ const productosFalsos = [
     precio: 14990,
     stock: 50,
     categoria: "Ropa",
-    // --- CAMPO NUEVO ---
     imagen: "/imagenes/productos/hunter/3Gon.png",
     imagenesGaleria: ["/imagenes/productos/hunter/3Gon.png"],
     descripcionDetallada: ["Figura de Gon", "Edición especial"]
@@ -51,16 +44,15 @@ const productosFalsos = [
     nombre: "Fushiguro Touji - Premium Chokonose Figure (SEGA)",
     descripcion: "Primer tomo del manga",
     precio: 7990,
-    stock: 5, // Stock crítico
+    stock: 5, 
     categoria: "Manga",
-    // --- CAMPO NUEVO ---
     imagen: "/imagenes/productos/jujutsuKaisen/11Touji.png",
     imagenesGaleria: ["/imagenes/productos/jujutsuKaisen/11Touji.png"],
     descripcionDetallada: ["Figura de Toji", "Nueva"]
   },
 ];
 
-// --- SIMULACIÓN DE API (GET /api/productos) ---
+
 export const getProductosServicio = () => {
   console.log("Servicio: Obteniendo lista de productos...");
   
@@ -68,7 +60,7 @@ export const getProductosServicio = () => {
     setTimeout(() => {
       console.log("Servicio: Datos de productos entregados.");
       resolve(productosFalsos);
-    }, 500); // 0.5 segundos
+    }, 500);
   });
 };
 
@@ -76,20 +68,15 @@ export const crearProductoServicio = (datosProducto) => {
   console.log("Servicio: Creando producto con", datosProducto);
 
   return new Promise((resolve) => {
-    // Simulamos un retraso de red
     setTimeout(() => {
-      // Creamos un ID falso (ej. 105)
       const nuevoProducto = {
         id: Math.floor(Math.random() * 1000) + 105, 
-        ...datosProducto, // Esto incluye nombre, desc, precio, stock, cat
+        ...datosProducto, 
       };
 
-      // (En un mundo real, el backend lo insertaría en la DB)
-      // productosFalsos.push(nuevoProducto); // (No es necesario en la simulación)
-      
       console.log("Servicio: Producto creado.", nuevoProducto);
       resolve(nuevoProducto);
-    }, 1000); // 1 segundo
+    }, 1000); 
   });
 };
 

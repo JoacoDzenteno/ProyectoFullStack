@@ -1,21 +1,11 @@
-// En: src/vistas/admin/productos/ListaProductos.jsx
-
 import React, { useState, useEffect } from 'react';
-// (Usa tu ruta correcta a 'estructura' o 'layout')
 import { LayoutAdmin } from '../../../componentes/estructura/LayoutAdmin/LayoutAdmin.jsx'; 
 import { Table, Button, Spinner, Alert } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { LinkContainer } from 'react-router-bootstrap';
-
-// 1. Importamos el servicio de PRODUCTOS
 import { getProductosServicio } from '../../../servicios/productoServicio.js';
 import { deleteProductoServicio } from '../../../servicios/productoServicio.js';
-
-
-
-
-// 2. Importamos su CSS
 import './ListaProductos.css'; 
 
 export function ListaProductos() {
@@ -24,7 +14,6 @@ export function ListaProductos() {
   const [cargando, setCargando] = useState(true);
   const [mensaje, setMensaje] = useState('');
 
-  // 2. Función de carga (la blindamos por si acaso)
   const cargarProductos = async () => {
     try {
       setCargando(true);
@@ -33,7 +22,7 @@ export function ListaProductos() {
     } catch (error) {
       console.error("Error al cargar productos:", error);
       setMensaje('Error al cargar productos.');
-      setProductos([]); // Blindaje
+      setProductos([]); 
     } finally {
       setCargando(false);
     }
@@ -43,23 +32,20 @@ export function ListaProductos() {
     cargarProductos();
   }, []);
 
-  // --- 3. ¡NUEVA FUNCIÓN PARA BORRAR (con blindaje)! ---
   const manejarDelete = async (id) => {
     const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar el producto con ID ${id}?`);
     
     if (confirmar) {
       try {
         setMensaje(''); 
-        await deleteProductoServicio(id); // Llamamos al servicio
+        await deleteProductoServicio(id);
 
-        // BLINDAJE: Chequeo ANTES de filtrar
         if (!Array.isArray(productos)) {
           console.error("Estado 'productos' corrompido. Forzando recarga.");
           cargarProductos(); 
           return;
         }
 
-        // Si es un array, filtramos (actualiza la UI sin recargar)
         const nuevaLista = productos.filter(p => p.id !== id);
         setProductos(nuevaLista);
         setMensaje('Producto eliminado exitosamente.');
@@ -85,7 +71,6 @@ export function ListaProductos() {
 
       <Table striped bordered hover responsive>
         <thead className="table-dark">
-          {/* ... (encabezados de la tabla) ... */}
           <tr>
             <th># ID</th>
             <th>Nombre</th>
@@ -118,8 +103,7 @@ export function ListaProductos() {
                     <FontAwesomeIcon icon={faEdit} />
                   </Button>
                 </LinkContainer>
-                  
-                  {/* --- 4. CONECTAMOS EL BOTÓN ONCLICK --- */}
+
                   <Button 
                     variant="danger" 
                     size="sm"

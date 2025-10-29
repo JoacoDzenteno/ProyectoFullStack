@@ -1,8 +1,6 @@
-/* En: src/vistas/admin/productos/FormularioProducto.css */
-
 .formulario-producto-card {
-  max-width: 800px; /* Un poco más ancho para la descripción */
-  margin: 0 auto; /* Lo centra en la página */
+  max-width: 800px; 
+  margin: 0 auto; 
 }
 
 .formulario-producto-card .form-label {
