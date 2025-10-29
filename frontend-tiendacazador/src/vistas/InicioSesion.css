@@ -1,0 +1,52 @@
+/* En: src/vistas/InicioSesion.css */
+
+/* --- INICIO DEL CAMBIO --- */
+/* Este es el nuevo contenedor que centra la tarjeta */
+.contenedor-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-top: 5rem; /* Le damos un aire arriba */
+  padding-bottom: 5rem; /* Le damos un aire abajo */
+}
+/* --- FIN DEL CAMBIO --- */
+
+
+/* Limitamos el ancho de la tarjeta de login en pantallas grandes */
+.login-card {
+  max-width: 500px;
+  width: 100%; /* Hacemos que ocupe el 100% de su contenedor */
+}
+
+/* Estilos rescatados de tu .login antiguo */
+.login-card .card-title {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Estilos rescatados de tu fieldset/input */
+.login-card .form-label {
+  font-size: 1.4rem; 
+  font-weight: 600;
+}
+
+.login-card .form-control {
+  font-size: 1.5rem;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.login-card .btn-primary {
+  font-size: 1.6rem;
+  font-weight: bold;
+  padding: 12px;
+  background: var(--colorUso); /* ¡Usamos tu variable de color! */
+  border: none;
+  transition: background 0.3s;
+}
+
+.login-card .btn-primary:hover {
+  background: #c92121; /* Un rojo un poco más oscuro */
+}

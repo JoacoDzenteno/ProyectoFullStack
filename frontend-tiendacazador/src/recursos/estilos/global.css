@@ -1,0 +1,575 @@
+:root {
+  --colorUso: #ec3030;
+}
+
+/* -----------------------------------------------------------------------
+  1. ESTILOS BASE Y DE FONDO
+-----------------------------------------------------------------------
+*/
+body {
+  background: url(../imagenes/fondoPagedit.PNG) repeat;
+  /* Espacio superior para la barra de navegación FIJA */ 
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  outline: none;
+  border: none;
+  text-decoration: none;
+  transition: 0.2s linear;
+}
+html {
+  font-size: 62.5%; /* Esto es para que 1rem = 10px */
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  overflow-x: hidden;
+}
+section {
+  padding: 2rem 9%;
+}
+
+/* -----------------------------------------------------------------------
+  2. ESTILOS PARA LA PÁGINA 'Inicio.jsx'
+-----------------------------------------------------------------------
+*/
+.home .btn {
+  display: inline-block;
+  margin-top: 1rem;
+  border-radius: 5rem;
+  background: url(../imagenes/botoned.jpg) round;
+  color: #f80000;
+  padding: 3rem 3.5rem;
+  cursor: pointer;
+  font-size: 1.7rem;
+  font-weight: bold;
+  -webkit-text-stroke: 0.9px #000000;
+}
+
+.home {
+  display: flex;
+  align-items: center;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 0;
+  /* Damos espacio interno en lugar de márgenes */
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+}
+.home .contenido {
+  max-height: 50rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+.home .contenido h3 {
+  font-size: 6rem;
+  -webkit-text-stroke: 2px #ffffff;
+  color: #000000;
+  text-align: justify;
+}
+.home .contenido span {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #ec3030;
+  -webkit-text-stroke: 0.9px rgb(0, 0, 0);
+  padding: 1rem 1rem;
+  line-height: 1.5;
+  display: block;
+  text-align: justify;
+}
+.home .contenido p {
+  font-size: 1.8rem;
+  color: #242323;
+  -webkit-text-stroke: 0.15px rgb(255, 255, 255);
+  padding: 1rem 0;
+  line-height: 1.5;
+  font-weight: bold;
+  text-align: justify;
+  margin-right: 2rem;
+}
+.contenedorImagen {
+  flex-shrink: 0;
+}
+#imagenportada {
+  max-width: 405px;
+  width: 100%;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 2);
+}
+
+/* -----------------------------------------------------------------------
+  INICIO: ESTILOS PARA LA PÁGINA 'Nosotros.jsx'
+  (Pegar después de los estilos de .home)
+-----------------------------------------------------------------------
+*/
+
+/* Sección de nosotros */
+.nosotros {
+  backdrop-filter: blur(5px);
+}
+.nosotrosTt {
+  box-shadow: 0 0.5rem 1.5rem #000000;
+  border-radius: 2rem;
+  text-align: center;
+  font-size: 4rem;
+  color: #000000;
+  padding: 1rem;
+  margin: 2rem 0;
+  background: #f6f6f6;
+}
+.nosotrosTt span {
+  color: var(--colorUso);
+  -webkit-text-stroke: 0.9px rgb(0, 0, 0);
+}
+.nosotros .seccionNs {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+  padding: 2rem 0;
+  padding-bottom: 3rem;
+}
+.nosotros .seccionNs .videoNs {
+  flex: 1 1 40rem;
+  position: relative;
+}
+.nosotros .seccionNs .videoNs video {
+  width: 75%;
+  border: 1.5rem solid #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 1rem 1rem rgb(255, 0, 0);
+  object-fit: cover;
+}
+.nosotros .seccionNs .videoNs h3 {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3rem;
+  background: #ffffff;
+  width: 75%;
+  padding: 1rem 2rem;
+  text-align: center;
+  mix-blend-mode: screen;
+}
+.nosotros .seccionNs .contenidoNs {
+  flex: 1 1 60rem;
+}
+.nosotros .seccionNs .contenidoNs h3 {
+  font-size: 3rem;
+  color: #242323;
+  -webkit-text-stroke: 0.15px rgb(255, 255, 255);
+  font-weight: bold;
+}
+.nosotros .seccionNs .contenidoNs p {
+  font-size: 1.8rem;
+  color: #242323;
+  -webkit-text-stroke: 0.15px rgb(255, 255, 255);
+  padding: 0.5rem 0;
+  padding-top: 1rem;
+  line-height: 1.5;
+  font-weight: bold;
+}
+
+/* -----------------------------------------------------------------------
+  FIN: ESTILOS 'Nosotros.jsx'
+-----------------------------------------------------------------------
+*/
+
+/* -----------------------------------------------------------------------
+  INICIO: ESTILOS PARA LA PÁGINA 'Contacto.jsx'
+  (Pegar después de los estilos de .nosotros)
+-----------------------------------------------------------------------
+*/
+
+/* Vista contacto */
+.contacto {
+  margin-top: 5rem;
+}
+.contacto .seccionCont {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.contacto .seccionCont form {
+  flex: 1 1 40rem;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 0.5rem 1.5rem black;
+  border: 0.5rem solid black;
+  background: #f6f6f6;
+  border-radius: 0.5rem;
+}
+.contacto .seccionCont .imagen {
+  flex: 0.5 1 30rem;
+}
+.contacto .seccionCont img {
+  margin-left: 120px;
+  width: 50%;
+  border-radius: 50px;
+}
+.contacto .seccionCont form .box {
+  padding: 1rem;
+  font-size: 1.7rem;
+  color: #000000;
+  text-transform: none;
+  border: 0.5rem solid #000000;
+  border-radius: 0.5rem;
+  margin: 0.7rem 0;
+  width: 100%;
+}
+.contacto .seccionCont form .box:focus {
+  border-color: var(--colorUso);
+}
+.contacto .seccionCont form textarea {
+  height: 15rem;
+  resize: none;
+}
+.contacto .tituloCont {
+  box-shadow: 0 0.5rem 1.5rem #000000;
+  border-radius: 2rem;
+  text-align: center;
+  font-size: 4rem;
+  color: #000000;
+  padding: 1rem;
+  margin: 2rem 0;
+  background: #f6f6f6;
+}
+
+/* --- ESTILO PARA EL BOTÓN DE "ENVIAR MENSAJE" --- */
+/* (Copiado de tu '.btn' original para que se vea igual) */
+.btn-contacto {
+  display: inline-block;
+  margin-top: 1rem;
+  border-radius: 5rem;
+  background: url(../imagenes/botoned.jpg) round;
+  color: #f80000;
+  padding: 2rem 2.5rem; /* Un poco más pequeño que el del home */
+  cursor: pointer;
+  font-size: 1.7rem;
+  font-weight: bold;
+  -webkit-text-stroke: 0.9px #000000;
+  /* (Asegúrate que 'botoned.jpg' esté en 'public/imagenes/') */
+}
+
+/* -----------------------------------------------------------------------
+  FIN: ESTILOS 'Contacto.jsx'
+-----------------------------------------------------------------------
+*/
+
+/* -----------------------------------------------------------------------
+  INICIO: ESTILOS PARA LA PÁGINA 'Blogs.jsx'
+  (Pegar después de los estilos de .contacto)
+-----------------------------------------------------------------------
+*/
+
+/* Vista de blogs */
+.Sorteos {
+  padding: 20px;
+}
+.titulosPg {
+  text-align: center;
+  font-size: 4rem;
+  color: #000000;
+  padding: 1rem;
+  margin: 2rem 0;
+  backdrop-filter: blur(5px);
+  margin-top: 8rem;
+  box-shadow: 0 0.5rem 1.5rem #000000;
+  border-radius: 2rem;
+  border: 0.1rem solid #000000;
+  -webkit-text-stroke: 2px #ffffff;
+}
+.bloque-sorteo {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  width: 100%;
+  background-color: #000000;
+  border-radius: 10px;
+}
+.contenedorBlog {
+  flex-direction: column;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.cajaBlog {
+  flex: 1;
+  color: #000000;
+  padding: 50px;
+  font-size: 20px;
+  -webkit-text-stroke: 2px #ffffff;
+}
+.cajaBlog p {
+  color: black;
+  -webkit-text-stroke: 0.5px #ffffff;
+  text-align: justify;
+}
+.imgSorteo {
+  flex: 1;
+  text-align: center;
+}
+.imgSorteo a {
+  display: inline-block;
+}
+.imgSorteo img {
+  max-width: 90%;
+  height: auto;
+  margin: 5px;
+}
+hr {
+  border-top: 1px solid #ff0000;
+  margin: 20px 0;
+}
+
+/* -----------------------------------------------------------------------
+  FIN: ESTILOS 'Blogs.jsx'
+-----------------------------------------------------------------------
+*/
+
+/* -----------------------------------------------------------------------
+  INICIO: ESTILOS 'Productos.jsx' y 'ProductoEspecifico.jsx'
+  (Pegar después de los estilos de .blogs)
+-----------------------------------------------------------------------
+*/
+
+/* --- Estilos de la PÁGINA DE LISTA DE PRODUCTOS --- */
+.productos {
+  /* min-height: 100vh; (Lo quitamos, ya lo maneja el layout) */
+  background: url(../imagenes/fondoPagedit.PNG) repeat;
+  background-size: auto;
+  background-position: center;
+}
+/* (La clase .titulosPg ya la habíamos añadido para 'Blogs', 
+   así que se reutilizará automáticamente. ¡Perfecto!) */
+.productos .contenedorPr{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+.productos .contenedorPr .caja{
+  flex: 1 1 30rem;
+  box-shadow: 0 0.5rem 1.5rem #000000;
+  border-radius: 2rem;
+  border: 0.1rem solid #000000;
+  position: relative;
+  backdrop-filter: blur(5px);
+}
+.productos .contenedorPr .caja .imagenPr{
+  position: relative;
+  text-align: center;
+  padding-top: 2rem;
+  overflow: hidden;
+}
+.productos .contenedorPr .caja .imagenPr img{
+  height: 25rem;
+}
+.productos .contenedorPr .caja:hover .imagenPr img{
+  transform: scale(1.1);
+}
+.productos .contenedorPr .caja .imagenPr .iconos{
+  position: absolute;
+  bottom: -7rem; left: 0;right: 0;
+  display: flex;
+}
+.productos .contenedorPr .caja:hover .imagenPr .iconos {
+  bottom: 0;
+}
+.productos .contenedorPr .caja .imagenPr .iconos a{
+  height: 3rem;
+  line-height: 2.5rem;
+  font-size: 1.5rem;
+  width: 50%;
+  background:black;
+  color: #ffffff;
+  text-decoration: none;
+}
+.productos .contenedorPr .caja .imagenPr .iconos .cart-btn{
+  border-left: 0.1rem;
+  border-right: 0.1rem ;
+  width: 100%;
+}
+.productos .contenedorPr .caja .imagenPr .iconos a:hover{
+  background: hsl(0, 38%, 69%);
+}
+.productos .contenedorPr .caja .contenidoPro h3{
+  font-size: 2.5rem;
+  color: #000000;
+  text-align: center;
+  -webkit-text-stroke: 0.5px rgb(255, 255, 255);
+  margin-bottom: 2rem;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.productos .contenedorPr .caja .contenidoPro a {
+  text-decoration: none;
+}
+
+/* --- Estilos de la PÁGINA DE DETALLE DE PRODUCTO --- */
+#detallesProd{
+  display: flex;
+  justify-content: space-evenly;
+  backdrop-filter: blur(5px);
+  margin-top: 50px;
+  margin-bottom: 50px;
+  margin-left: 80px;
+  margin-right: 80px;
+}
+#detallesProd .imagenProducto{
+  width: 30%;
+  margin-right: 50px;
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  margin-left: 10rem;
+  border-radius: 2rem;
+}
+.grupoImg{
+  display: flex;
+  justify-content: space-between;
+}
+.filaImg{
+  flex-basis: 24%;
+  cursor: pointer;
+}
+.descripcionProducto {
+  display: flex;
+  flex-direction: column;
+  justify-content:left ;
+  align-items: flex-start;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 50px;
+} 
+.descripcionProducto h6 {
+  color: #000000;
+  font-size: 16px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  -webkit-text-stroke: 0.5px rgb(255, 255, 255);
+} 
+.descripcionProducto h4 {
+  color: #333;
+  font-size: 22px;
+  margin: 10px 0;
+  -webkit-text-stroke: 0.5px rgb(255, 255, 255);
+} 
+.descripcionProducto h2 {
+  color: #de5901;
+  font-size: 28px;
+  margin: 15px 0;
+  -webkit-text-stroke: 0.5px rgb(255, 255, 255);
+} 
+.descripcionProducto input {
+  width: 80px;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin: 10px 0;
+  font-size: 16px;
+} 
+.descripcionProducto button {
+  background: #ba4129;
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 10px 0 20px;
+  transition: 0.5s;
+} 
+.descripcionProducto button:hover {
+  background: hsl(0, 38%, 69%);
+} 
+.descripcionProducto span ul li{
+  color: #000000;
+  font-size: 18px;
+  line-height: 1.6;
+  max-width: 100%;
+  text-align: left;
+  font-weight: bold;
+  -webkit-text-stroke: 0.3px rgb(255, 255, 255);
+}
+
+/* -----------------------------------------------------------------------
+  FIN: ESTILOS DE PRODUCTOS
+-----------------------------------------------------------------------
+*/
+
+
+/* -----------------------------------------------------------------------
+  3. ESTILOS PARA 'PiePagina.jsx'
+-----------------------------------------------------------------------
+*/
+.piePagina {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background-color: #000000;
+  /* 'margin-top: auto' es reemplazado por el Sticky Footer */
+}
+.izq {
+  width: 30%;
+}
+.izq img {
+  max-width: 150px;
+}
+.imgCont {
+  display: flex;
+  gap: 20px;
+}
+.imgCont a {
+  display: inline-block;
+  line-height: 0;
+}
+.imgCont img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+.piePagina p {
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: bolder;
+}
+.piePagina p span {
+  color: #ff0000;
+}
+
+/* -----------------------------------------------------------------------
+  4. CORRECCIONES PARA 'BarraNavegacion' (Bootstrap)
+-----------------------------------------------------------------------
+*/
+.navbar-light .navbar-nav .nav-link:hover {
+  color: var(--colorUso) !important;
+}
+.navbar-brand span {
+  color: #ff0000 !important;
+}
+
+/* -----------------------------------------------------------------------
+  5. SOLUCIÓN STICKY FOOTER (LA ÚNICA QUE DEBE HABER)
+-----------------------------------------------------------------------
+*/
+
+/* 1. El 'layout-pagina' (el <div> que envuelve tus VISTAS)
+      usará flexbox y medirá COMO MÍNIMO el alto de la pantalla */
+.layout-pagina {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 100% del Alto de la Ventana */
+}
+
+/* 2. El 'contenido-principal' (el <main>) crecerá para 
+      ocupar todo el espacio vacío que sobre */
+.contenido-principal {
+  flex-grow: 1; /* Esto empuja el footer hacia abajo */
+}
