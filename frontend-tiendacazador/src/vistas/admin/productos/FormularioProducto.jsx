@@ -4,62 +4,111 @@ import { Form, Button, Card, Alert, Spinner, Row, Col } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import './FormularioProducto.css'; 
 
-// Archivos referentes al CRUD
-import { crearProductoServicio } from '../../../servicios/productoServicio.js';
-import { updateProductoServicio } from '../../../servicios/productoServicio.js';
-import { getProductoPorIdServicio } from '../../../servicios/productoServicio.js';
+// --- MODIFICADO ---
+// Importamos los 4 servicios que necesitamos
+import { 
+  crearProductoServicio, 
+  updateProductoServicio, 
+  getProductoPorIdServicio, 
+  getCategoriasServicio // <-- ¡NUEVO!
+} from '../../../servicios/productoServicio.js';
 
 export function FormularioProducto() {
 
   const { id } = useParams();
- 
+  const navigate = useNavigate();
+
+  // Estados del formulario
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState(0);
   const [stock, setStock] = useState(0);
-  const [categoria, setCategoria] = useState('');
   const [imagen, setImagen] = useState('');
+  
+  // --- MODIFICADO ---
+  // El estado 'categoria' ahora guarda solo el ID
+  const [categoriaId, setCategoriaId] = useState(''); 
+  
+  // --- NUEVO ---
+  // Nuevo estado para guardar la lista del dropdown
+  const [listaCategorias, setListaCategorias] = useState([]);
 
+  // Estados de UI
   const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
+  
+  // (CargandoDatos ahora también manejará la carga de categorías)
   const [cargandoDatos, setCargandoDatos] = useState(false);
-  const navigate = useNavigate();
 
+  // --- MODIFICADO ---
+  // Efecto para cargar datos (para "Editar" o "Crear")
   useEffect(() => {
-    if (id) {
-      const cargarDatosProducto = async () => {
-        setCargandoDatos(true); 
-        try {
+    
+    const cargarDatos = async () => {
+      setCargandoDatos(true);
+      try {
+        // 1. Siempre cargamos la lista de categorías
+        const categoriasData = await getCategoriasServicio();
+        setListaCategorias(categoriasData || []);
+
+        // 2. Si hay un 'id', cargamos los datos de ESE producto
+        if (id) {
           const datos = await getProductoPorIdServicio(id);
           setNombre(datos.nombre);
           setDescripcion(datos.descripcion);
           setPrecio(datos.precio);
           setStock(datos.stock);
-          setCategoria(datos.categoria);
           setImagen(datos.imagen || '');
-        } catch (err) {
-          setError(err.message);
-        } finally {
-          setCargandoDatos(false); 
+          
+          // Guardamos solo el ID de la categoría del producto
+          if (datos.categoria) {
+            setCategoriaId(datos.categoria.id);
+          }
         }
-      };
-      cargarDatosProducto();
-    }
-  }, [id]);
+        
+      } catch (err) {
+        setError(err.message || 'Error al cargar los datos');
+      } finally {
+        setCargandoDatos(false); 
+      }
+    };
+    
+    cargarDatos();
+  }, [id]); // Depende de 'id'
 
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setCargando(true);
-
+    
     if (precio <= 0 || stock < 0) {
       setError('El precio y el stock deben ser números positivos.');
-      setCargando(false);
+      return;
+    }
+    
+    // --- MODIFICADO ---
+    // El 'id' de la categoría no puede estar vacío
+    if (!categoriaId) {
+      setError('Debe seleccionar una categoría.');
       return;
     }
 
+    setCargando(true);
+
     try {
-      const datosProducto = { nombre, descripcion, precio, stock, categoria, imagen };
+      // --- MODIFICADO ---
+      // Construimos el objeto que el backend (Java) espera
+      const datosProducto = { 
+        nombre, 
+        descripcion, 
+        precio, 
+        stock, 
+        imagen, 
+        // Enviamos la categoría como un objeto anidado
+        categoria: { 
+          id: parseInt(categoriaId, 10) // Aseguramos que sea un número
+        } 
+      };
       
       if (id) {
         await updateProductoServicio(id, datosProducto);
@@ -78,6 +127,7 @@ export function FormularioProducto() {
 
   const tituloPagina = id ? "Editar Producto" : "Crear Nuevo Producto";
 
+  // Spinner de carga principal
   if (cargandoDatos) {
     return (
       <LayoutAdmin titulo="Cargando...">
@@ -95,11 +145,11 @@ export function FormularioProducto() {
           <Form onSubmit={handleSubmit}>
             {error && <Alert variant="danger">{error}</Alert>}
 
+            {/* --- (Campos Nombre, Imagen, Descripción - Sin cambios) --- */}
             <Form.Group className="mb-3" controlId="formNombre">
               <Form.Label>Nombre del Producto</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ej: Figura Gon Freecss"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 required
@@ -110,7 +160,6 @@ export function FormularioProducto() {
               <Form.Label>URL de la Imagen Principal</Form.Label>
               <Form.Control
                 type="text"
-                placeholder="Ej: /imagenes/productos/hunter/nueva.png"
                 value={imagen}
                 onChange={(e) => setImagen(e.target.value)}
                 required
@@ -122,33 +171,30 @@ export function FormularioProducto() {
               <Form.Control
                 as="textarea"
                 rows={3}
-                placeholder="Ej: Figura de acción de 15cm..."
                 value={descripcion}
                 onChange={(e) => setDescripcion(e.target.value)}
                 required
               />
             </Form.Group>
 
+            {/* --- (Campos Precio y Stock - Sin cambios) --- */}
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="formPrecio">
                   <Form.Label>Precio</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder="19990"
                     value={precio}
                     onChange={(e) => setPrecio(e.target.valueAsNumber || 0)}
                     required
                   />
                 </Form.Group>
               </Col>
-              
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="formStock">
                   <Form.Label>Stock</Form.Label>
                   <Form.Control
                     type="number"
-                    placeholder="25"
                     value={stock}
                     onChange={(e) => setStock(e.target.valueAsNumber || 0)}
                     required
@@ -157,17 +203,28 @@ export function FormularioProducto() {
               </Col>
             </Row>
 
+            {/* --- ¡CAMBIO GRANDE AQUÍ! --- */}
+            {/* Reemplazamos el <input> de categoría por un <select> */}
             <Form.Group className="mb-3" controlId="formCategoria">
               <Form.Label>Categoría</Form.Label>
-              <Form.Control
-                type="text"
-                placeholder="Ej: Figuras"
-                value={categoria}
-                onChange={(e) => setCategoria(e.target.value)}
+              <Form.Select
+                value={categoriaId} // El valor es el ID
+                onChange={(e) => setCategoriaId(e.target.value)} // Guardamos el ID
                 required
-              />
+              >
+                {/* Opción por defecto */}
+                <option value="">Seleccione una categoría</option>
+                
+                {/* Mapeamos la lista de categorías cargada */}
+                {listaCategorias.map(cat => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.nombre}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
 
+            {/* --- (Botones - Sin cambios) --- */}
             <Button variant="success" type="submit" disabled={cargando}>
               {cargando ? 'Guardando...' : 'Guardar Producto'}
             </Button>

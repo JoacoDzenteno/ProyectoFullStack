@@ -1,140 +1,97 @@
-const productosFalsos = [
-  {
-    id: 101,
-    nombre: "Machi Komacine - Noodle Stopper Figure (FuRyu)",
-    descripcion: "Figura de acción de Gon 15cm",
-    precio: 35000,
-    stock: 25,
-    categoria: "Figuras",
-    imagen: "/imagenes/productos/hunter/1MachiKomacine.png",
-    imagenesGaleria: [
-      "/imagenes/productos/hunter/1MachiKomacine.png",
-      "/imagenes/productos/hunter/1.1MachiKomacine.png",
-      "/imagenes/productos/hunter/1.2MachiKomacine.png",
-      "/imagenes/productos/hunter/1.3MachiKomacine.png"
-    ],
-    descripcionDetallada: [
-      "Figura de Machi Komacine", "Nueva", "Año 2025", "10 centímetros aproximadamente", "Estado tal como se ve en la foto"
-    ]
-  },
-  {
-    id: 102,
-    nombre: "Shalnark - Noodle Stopper Figure (FuRyu)",
-    descripcion: "Figura de acción de Killua Godspeed",
-    precio: 24990,
-    stock: 15,
-    categoria: "Figuras",
-    imagen: "/imagenes/productos/hunter/2Shalnark.png",
-    imagenesGaleria: ["/imagenes/productos/hunter/2Shalnark.png"],
-    descripcionDetallada: ["Figura de Shalnark", "Nueva", "12cm"]
-  },
-  {
-    id: 103,
-    nombre: "Gon Freecss - Memorable Saga Special (Bandai Spirits)",
-    descripcion: "Polera de algodón con logo HxH",
-    precio: 14990,
-    stock: 50,
-    categoria: "Ropa",
-    imagen: "/imagenes/productos/hunter/3Gon.png",
-    imagenesGaleria: ["/imagenes/productos/hunter/3Gon.png"],
-    descripcionDetallada: ["Figura de Gon", "Edición especial"]
-  },
-  {
-    id: 104,
-    nombre: "Fushiguro Touji - Premium Chokonose Figure (SEGA)",
-    descripcion: "Primer tomo del manga",
-    precio: 7990,
-    stock: 5, 
-    categoria: "Manga",
-    imagen: "/imagenes/productos/jujutsuKaisen/11Touji.png",
-    imagenesGaleria: ["/imagenes/productos/jujutsuKaisen/11Touji.png"],
-    descripcionDetallada: ["Figura de Toji", "Nueva"]
-  },
-];
-
-
-export const getProductosServicio = () => {
-  console.log("Servicio: Obteniendo lista de productos...");
-  
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      console.log("Servicio: Datos de productos entregados.");
-      resolve(productosFalsos);
-    }, 500);
-  });
-};
-
-export const crearProductoServicio = (datosProducto) => {
-  console.log("Servicio: Creando producto con", datosProducto);
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      const nuevoProducto = {
-        id: Math.floor(Math.random() * 1000) + 105, 
-        ...datosProducto, 
-      };
-
-      console.log("Servicio: Producto creado.", nuevoProducto);
-      resolve(nuevoProducto);
-    }, 1000); 
-  });
-};
-
-export const deleteProductoServicio = (id) => {
-  console.log("Servicio: Borrando producto con ID", id);
-
-  return new Promise((resolve, reject) => {
-    // Simulamos un retraso de red
-    setTimeout(() => {
-      // (En un backend real, esto eliminaría el registro de la DB)
-      // (Para la simulación, no necesitamos modificar la lista falsa)
-      
-      console.log("Servicio: Producto borrado (simulado).");
-      resolve({ mensaje: "Producto eliminado" });
-    }, 500); // 0.5 segundos
-  });
-};
 // En: src/servicios/productoServicio.js
 
-// ... (después de 'getProductosServicio', 'crearProductoServicio' y 'deleteProductoServicio') ...
+import api from './api'; // ¡Importamos el axios centralizado!
 
-// --- SIMULACIÓN DE API (GET /api/productos/:id) ---
-export const getProductoPorIdServicio = (id) => {
-  console.log("Servicio: Buscando producto con ID", id);
-  // El 'id' de la URL viene como string, lo convertimos a número
-  const idNumerico = parseInt(id, 10); 
+// --- 1. SERVICIOS PÚBLICOS (Para la Tienda) ---
 
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      // Buscamos al producto en nuestra lista falsa
-      const producto = productosFalsos.find(p => p.id === idNumerico);
-      
-      if (producto) {
-        console.log("Servicio: Producto encontrado.", producto);
-        resolve(producto); // Lo devolvemos
-      } else {
-        console.log("Servicio: Producto no encontrado.");
-        reject(new Error('Producto no encontrado'));
-      }
-    }, 500); // 0.5 segundos
-  });
+/**
+ * (Público) Obtiene la lista de todos los productos
+ * GET /api/productos
+ */
+export const getProductosServicio = async () => {
+  try {
+    const response = await api.get('/productos');
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener productos:", error.response?.data || error.message);
+    throw error;
+  }
 };
 
-// --- SIMULACIÓN DE API (PUT /api/productos/:id) ---
-export const updateProductoServicio = (id, datosProducto) => {
-  console.log(`Servicio: Actualizando producto ${id} con`, datosProducto);
-  const idNumerico = parseInt(id, 10);
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      // (Simulación de éxito. El backend haría el UPDATE)
-      const productoActualizado = {
-        id: idNumerico,
-        ...datosProducto,
-      };
-      console.log("Servicio: Producto actualizado (simulado).", productoActualizado);
-      resolve(productoActualizado);
-    }, 1000); // 1 segundo
-  });
+/**
+ * (Público) Obtiene un solo producto por su ID
+ * GET /api/productos/:id
+ */
+export const getProductoPorIdServicio = async (id) => {
+  try {
+    const response = await api.get(`/productos/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al obtener producto ${id}:`, error.response?.data || error.message);
+    throw error;
+  }
 };
-// (Más adelante aquí irán: getProductoPorId, crearProducto, etc.)
+
+/**
+ * (Público) Obtiene la lista de todas las categorías
+ * GET /api/categorias
+ * (¡Lo necesitaremos para el formulario de productos!)
+ */
+export const getCategoriasServicio = async () => {
+  try {
+    const response = await api.get('/categorias');
+    return response.data;
+  } catch (error) {
+    console.error("Error al obtener categorías:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+
+// --- 2. SERVICIOS DE ADMIN (Para el Panel) ---
+
+/**
+ * (Admin) Crea un nuevo producto
+ * POST /api/admin/productos
+ */
+export const crearProductoServicio = async (datosProducto) => {
+  try {
+    // El backend espera 'datosProducto' con el formato de la entidad Producto.java
+    // (Ej: { nombre: "...", categoria: { id: 1 } })
+    const response = await api.post('/admin/productos', datosProducto);
+    return response.data;
+  } catch (error) {
+    console.error("Error al crear producto:", error.response?.data || error.message);
+    throw error;
+  }
+};
+
+/**
+ * (Admin) Actualiza un producto existente
+ * PUT /api/admin/productos/:id
+ */
+export const updateProductoServicio = async (id, datosProducto) => {
+  try {
+    const response = await api.put(`/admin/productos/${id}`, datosProducto);
+    return response.data;
+  } catch (error) {
+    console.error(`Error al actualizar producto ${id}:`, error.response?.data || error.message);
+    throw error;
+  }
+};
+
+/**
+ * (Admin) Borra un producto
+ * DELETE /api/admin/productos/:id
+ */
+export const deleteProductoServicio = async (id) => {
+  try {
+    const response = await api.delete(`/admin/productos/${id}`);
+    return response.data; // (Esto devolverá un 204 No Content, pero está bien)
+  } catch (error) {
+    console.error(`Error al borrar producto ${id}:`, error.response?.data || error.message);
+    throw error;
+  }
+};
+
+// (NOTA: Los servicios de 'desactivar' y 'stock' los podemos añadir aquí si los necesitas)

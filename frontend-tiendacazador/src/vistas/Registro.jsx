@@ -15,7 +15,7 @@ import {
   validarContrasena
 } from '../recursos/datos/registroFormDatos.js';
 
-import { registroServicio } from '../servicios/usuarioServicio.js';
+import { registroServicio } from '../servicios/authServicio.js';
 
 import './InicioSesion.css'; 
 

@@ -18,9 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.tiendadelcazador.tiendabackend.entities.Usuario;
 import com.tiendadelcazador.tiendabackend.services.UsuarioService;
 
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RestController
-@RequestMapping("/api/usuarios")
+@RequestMapping("/api/admin/usuarios")
 public class UsuarioRestController {
 
     @Autowired

@@ -14,4 +14,5 @@ public interface ProductoService {
     Integer getStockById(Long id);
     Producto desactiveProducto(Long id);
     
+    
 }

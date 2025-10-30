@@ -29,6 +29,7 @@ public class Producto {
     private String fechaCreacion;
 
     @ManyToOne
-    @JoinColumn(name = "categoria.id")
+    @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
 }

@@ -41,7 +41,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         Usuario existingUsuario = getUsuarioById(id);
         existingUsuario.setNombre(usuario.getNombre());
         existingUsuario.setEmail(usuario.getEmail());
-        existingUsuario.setContrasena(usuario.getContrasena());
+        existingUsuario.setPassword(usuario.getPassword());
+        return usuarioRepository.save(existingUsuario);
+    }
+    @Override
+    public Usuario deactiveUsuario(Long id) {
+        Usuario existingUsuario = getUsuarioById(id);
+        existingUsuario.setEstado(false); // Cambia el estado a inactivo
         return usuarioRepository.save(existingUsuario);
     }
 }

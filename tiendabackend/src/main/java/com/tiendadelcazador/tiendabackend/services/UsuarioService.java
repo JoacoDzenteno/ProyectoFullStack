@@ -11,5 +11,5 @@ public interface UsuarioService {
     List<Usuario> getAllUsuarios();
     void deleteUsuario(Long id);
     Usuario updateUsuario(Long id, Usuario usuario);
-    
+    Usuario deactiveUsuario(Long id);
 }

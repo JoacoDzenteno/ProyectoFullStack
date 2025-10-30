@@ -1,6 +1,8 @@
 package com.tiendadelcazador.tiendabackend.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Date; 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Producto createProducto(Producto producto) {
+        producto.setEstado(true);
+        producto.setFechaCreacion(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         return productoRepository.save(producto);
     }
 

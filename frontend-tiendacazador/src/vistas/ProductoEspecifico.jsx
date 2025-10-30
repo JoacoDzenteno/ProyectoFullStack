@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom'; // --- CORREGIDO: Importamos Link
 import { BarraNavegacion } from '../componentes/estructura/BarraNavegacion/BarraNavegacion.jsx';
 import { PiePagina } from '../componentes/estructura/PiePagina/PiePagina.jsx';
-import { Spinner, Alert } from 'react-bootstrap';
+import { Spinner, Alert, Button } from 'react-bootstrap'; // --- CORREGIDO: Importamos Button
 import { getProductoPorIdServicio } from '../servicios/productoServicio.js';
 import { useCarrito } from '../contexto/CarritoContexto.jsx';
 
@@ -15,7 +15,6 @@ export function ProductoEspecifico() {
   const [error, setError] = useState('');
   
   const [imagenPrincipal, setImagenPrincipal] = useState(''); 
-
   const [cantidad, setCantidad] = useState(1); 
 
   const { agregarAlCarrito } = useCarrito();
@@ -25,7 +24,10 @@ export function ProductoEspecifico() {
       try {
         const datos = await getProductoPorIdServicio(id);
         setProducto(datos);
-        setImagenPrincipal(datos.imagenesGaleria[0]); 
+        
+        // --- 1. CORREGIDO: Usamos el campo 'imagen' (real), no 'imagenesGaleria'
+        setImagenPrincipal(datos.imagen); 
+        
       } catch (err) {
         setError("Producto no encontrado o no disponible.");
       } finally {
@@ -41,11 +43,12 @@ export function ProductoEspecifico() {
     alert(`${cantidad} x ${producto.nombre} añadido(s) al carrito.`);
   };
 
+  // (El 'cambiarImagen' ya no es necesario, pero lo dejamos por si acaso)
   const cambiarImagen = (nuevaSrc) => {
     setImagenPrincipal(nuevaSrc);
   };
 
-
+  // (Spinner de carga - sin cambios)
   if (cargando) {
     return (
       <div className="layout-pagina">
@@ -56,6 +59,7 @@ export function ProductoEspecifico() {
     );
   }
 
+  // (Manejo de Error - sin cambios, pero ahora 'Link' y 'Button' están importados)
   if (error) {
     return (
       <div className="layout-pagina">
@@ -80,23 +84,18 @@ export function ProductoEspecifico() {
           <div className="imagenProducto">
             <img src={imagenPrincipal} width="100%" id="principalImg" alt={producto.nombre} />
             
-            <div className="grupoImg">
-              {producto.imagenesGaleria.map((imgSrc, index) => (
-                <div className="filaImg" key={index}>
-                  <img 
-                    src={imgSrc} 
-                    width="100%" 
-                    className="imgPeque" 
-                    alt={`Thumbnail ${index + 1}`}
-                    onClick={() => cambiarImagen(imgSrc)} 
-                  />
-                </div>
-              ))}
-            </div>
+            {/* --- 2. CORREGIDO: Eliminamos la galería ---
+              (El 'grupoImg' que mapeaba 'imagenesGaleria' se ha borrado)
+            */}
           </div>
 
           <div className="descripcionProducto">
-            <h6>{producto.categoria}</h6>
+            
+            {/* --- 3. CORREGIDO: 'categoria' es un objeto ---
+              (Usamos 'producto.categoria.nombre' y verificamos que exista primero)
+            */}
+            <h6>{producto.categoria && producto.categoria.nombre}</h6>
+            
             <h4>{producto.nombre}</h4>
             <h2>${producto.precio.toLocaleString('es-CL')}</h2>
             
@@ -114,13 +113,14 @@ export function ProductoEspecifico() {
             </button>
             
             <h4>Descripción</h4>
+            
+            {/* --- 4. CORREGIDO: Usamos 'descripcion' (real) ---
+              (Reemplazamos la lista 'descripcionDetallada' por un párrafo simple)
+            */}
             <span>
-              <ul>
-                {producto.descripcionDetallada.map((linea, index) => (
-                  <li key={index}>{linea}</li>
-                ))}
-              </ul>
+              <p>{producto.descripcion}</p>
             </span>
+            
           </div>
         </section>
 

@@ -1,9 +1,8 @@
 package com.tiendadelcazador.tiendabackend.repositories;
 
+import com.tiendadelcazador.tiendabackend.entities.Categoria;
 import org.springframework.data.repository.CrudRepository;
 
-import com.tiendadelcazador.tiendabackend.entities.Categoria;
-
-public interface CategoriaRepository extends CrudRepository<Categoria, Long>{
+public interface CategoriaRepository extends CrudRepository<Categoria, Long> {
 
 }
