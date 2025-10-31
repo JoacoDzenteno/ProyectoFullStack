@@ -2,7 +2,7 @@ import React from 'react';
 import { useAuth } from '../contexto/AuthContexto.jsx';
 import { Navigate, Outlet } from 'react-router-dom';
 
-const ROLES_ADMIN = ['super-admin'];
+const ROLES_ADMIN = ['admin'];
 
 export function RutaProtegida() {
   const { usuario } = useAuth();

@@ -84,7 +84,7 @@ export function Registro() {
     }
 
     try {
-      const datosUsuario = { rut, nombre, apellidos, correo, direccion, password, region, comuna };
+      const datosUsuario = { rut, nombre, apellidos, email: correo, direccion, password, region, comuna };
       
       await registroServicio(datosUsuario);
       

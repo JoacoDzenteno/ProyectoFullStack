@@ -24,7 +24,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 
-@Table(name = "usuarios", uniqueConstraints = {
+@Table(name = "usuario", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"email"}),
     @UniqueConstraint(columnNames = {"rut"})
 })
@@ -61,12 +61,12 @@ public class Usuario implements UserDetails{
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(rol));
+        return List.of(new SimpleGrantedAuthority(this.rol));
     }
 
     @Override
     public String getUsername() {
-        return email; 
+        return this.email; 
     }
 
     @Override
@@ -86,7 +86,7 @@ public class Usuario implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return estado; 
+        return this.estado; 
     }
 }
 

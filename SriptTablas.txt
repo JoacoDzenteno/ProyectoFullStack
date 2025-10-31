@@ -1,0 +1,48 @@
+-- -----------------------------------------------------
+-- Script de Creación de Tablas (Corregido SIN 'VISIBLE')
+-- -----------------------------------------------------
+
+-- 1. Tabla de Categorías
+CREATE TABLE IF NOT EXISTS `categoria` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- 2. Tabla de Productos
+CREATE TABLE IF NOT EXISTS `producto` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `descripcion` VARCHAR(512) NULL DEFAULT NULL,
+  `estado` BOOLEAN NULL DEFAULT NULL,
+  `fecha_creacion` VARCHAR(20) NULL DEFAULT NULL,
+  `imagen` VARCHAR(255) NULL DEFAULT NULL,
+  `nombre` VARCHAR(255) NULL DEFAULT NULL,
+  `precio` BIGINT NULL DEFAULT NULL,
+  `stock` INT NULL DEFAULT NULL,
+  `categoria_id` BIGINT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_producto_categoria_idx` (`categoria_id` ASC), -- <-- CORREGIDO
+  CONSTRAINT `fk_producto_categoria`
+    FOREIGN KEY (`categoria_id`)
+    REFERENCES `categoria` (`id`))
+ENGINE = InnoDB;
+
+
+-- 3. Tabla de Usuarios
+CREATE TABLE IF NOT EXISTS `usuario` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `apellido` VARCHAR(255) NULL DEFAULT NULL,
+  `comuna` VARCHAR(255) NULL DEFAULT NULL,
+  `direccion` VARCHAR(255) NULL DEFAULT NULL,
+  `email` VARCHAR(255) NULL DEFAULT NULL,
+  `estado` BOOLEAN NULL DEFAULT NULL,
+  `fecha_creacion` VARCHAR(20) NULL DEFAULT NULL,
+  `nombre` VARCHAR(255) NULL DEFAULT NULL,
+  `password` VARCHAR(255) NULL DEFAULT NULL,
+  `region` VARCHAR(255) NULL DEFAULT NULL,
+  `rol` VARCHAR(255) NULL DEFAULT NULL,
+  `rut` VARCHAR(255) NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `uk_usuario_email` (`email` ASC)) -- <-- CORREGIDO
+ENGINE = InnoDB;
