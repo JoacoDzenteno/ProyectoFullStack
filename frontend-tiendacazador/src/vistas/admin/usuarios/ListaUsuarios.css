@@ -1,0 +1,13 @@
+.table {
+  font-size: 1.4rem;
+  vertical-align: middle;
+}
+
+.table tbody td:last-child {
+  text-align: center;
+  white-space: nowrap;
+}
+
+.table .spinner-border {
+  color: var(--colorUso);
+}

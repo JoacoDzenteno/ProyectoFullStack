@@ -1,0 +1,9 @@
+.formulario-usuario-card {
+  max-width: 700px; 
+  margin: 0 auto; 
+}
+
+.formulario-usuario-card .form-label {
+  font-weight: bold;
+  font-size: 1.4rem;
+}

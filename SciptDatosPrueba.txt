@@ -1,0 +1,83 @@
+-- -----------------------------------------------------
+-- Script de Datos de Prueba (Seed Data)
+-- -----------------------------------------------------
+
+-- 1. Insertar Categorías (IDs 1 al 5)
+INSERT INTO `categoria` (nombre) VALUES
+('Yu-Gi-Oh'),
+('One Piece'),
+('Hunter × Hunter'),
+('Marvel'),
+('Kimetsu no Yaiba');
+
+
+-- 2. Insertar Usuarios ADMIN
+-- La contraseña '123456' ha sido encriptada con Bcrypt.
+-- Hash: $2a$10$4wP9WjApGO5o1zF4s1.mfe.S.P.s.c.H.l.Z.u.F.x.K.W.I.c
+
+INSERT INTO `usuario` (apellido, comuna, direccion, email, estado, fecha_creacion, nombre, password, region, rol, rut) 
+VALUES 
+(
+  'Zenteno Donoso', 
+  'maipu', 
+  'Lanco 3707', 
+  'jo.zenteno@duocuc.cl', 
+  true, 
+  CURDATE(), 
+  'Joaquin', 
+  '$2a$10$4wP9WjApGO5o1zF4s1.mfe.S.P.s.c.H.l.Z.u.F.x.K.W.I.c', 
+  'metropolitana', 
+  'ADMIN', 
+  '200529456'
+),
+(
+  'Lopez', 
+  'maipu', 
+  'Av. Esq. Blanca 501', 
+  'ig.lopezf@duocuc.cl', 
+  true, 
+  CURDATE(), 
+  'Ignacio', 
+  '$2a$10$4wP9WjApGO5o1zF4s1.mfe.S.P.s.c.H.l.Z.u.F.x.K.W.I.c', 
+  'metropolitana', 
+  'ADMIN', 
+  '213520369'
+);
+
+
+-- 3. Insertar Productos
+
+-- Categoría 1: Yu-Gi-Oh
+INSERT INTO `producto` (descripcion, estado, fecha_creacion, imagen, nombre, precio, stock, categoria_id)
+VALUES
+('Sin caja, 2025, 19 cm aprox.', true, CURDATE(), 'DragonOjosAzules.png', 'Blue-Eyes Ultimate Dragon - Equal Arts - Konami Prize Collection (Konami Amusement)', 28000, 10, 1),
+('Sin caja, 2025, 20 cm aprox.', true, CURDATE(), 'MagoNegro.png', 'Black Magician - Equal Arts - Konami Prize Collection (Konami Amusement)', 28000, 10, 1),
+('Sin caja, 2025, 19 cm aprox.', true, CURDATE(), 'ObelisknoKyoshinhei.png', 'Obelisk no Kyoshinhei - Konami Prize Collection - Monsters LEGION (Konami Amusement)', 30000, 15, 1);
+
+-- Categoría 2: One Piece
+INSERT INTO `producto` (descripcion, estado, fecha_creacion, imagen, nombre, precio, stock, categoria_id)
+VALUES
+('Nueva, 2023, 14.5 cm aprox.', true, CURDATE(), '5Hiriluk_Chopper.png', 'Dr. Hiriluk - Tony Tony Chopper - Ichiban Kuji One Piece Emotional Stories 2 (B Prize) - Revible Moment (Bandai Spirits)', 48000, 6, 2),
+('Caja Abierta, 2024, 24 cm aprox.', true, CURDATE(), '9Sabo.png', 'Sabo - Ichiban Kuji - Ichiban Kuji One Piece Kakumei no Honoo (B Prize) - Masterlise (Bandai Spirits)', 55000, 8, 2),
+('Nueva, 2024, 13 cm aprox.', true, CURDATE(), 'Luffy.png', 'D. Luffy - King of Artist - Special Ver. Boundman (Bandai Spirits)', 35000, 9, 2);
+
+-- Categoría 3: Hunter × Hunter
+INSERT INTO `producto` (descripcion, estado, fecha_creacion, imagen, nombre, precio, stock, categoria_id)
+VALUES
+('Nueva, 2025, 10 cm aprox.', true, CURDATE(), '1MachiKomacine.png', 'Machi Komacine - Noodle Stopper Figure (FuRyu)', 35000, 10, 3),
+('Nueva, 2025, 15 cm aprox.', true, CURDATE(), '2Shalnark.png', 'Shalnark - Noodle Stopper Figure (FuRyu)', 35000, 11, 3),
+('Nueva, 2024, 22 cm aprox.', true, CURDATE(), 'illumi.png', 'Illumi Zoldyck - Vibration Stars (Bandai Spirits)', 30000, 12, 3);
+
+-- Categoría 4: Marvel
+INSERT INTO `producto` (descripcion, estado, fecha_creacion, imagen, nombre, precio, stock, categoria_id)
+VALUES
+('Nueva, 2024, 28 cm aprox.', true, CURDATE(), 'CapitanAmerica.png', 'Captain America - Luminasta (SEGA)', 34000, 12, 4),
+('Nueva, 2024, 20 cm aprox.', true, CURDATE(), 'Hulk.png', 'Hulk - Luminasta (SEGA)', 34000, 12, 4),
+('Nueva, 2025, 16 cm aprox.', true, CURDATE(), 'Magneto.png', 'Magneto - ACT/CUT Premium Figure (SEGA)', 34000, 12, 4);
+
+-- Categoría 5: Kimetsu no Yaiba
+INSERT INTO `producto` (descripcion, estado, fecha_creacion, imagen, nombre, precio, stock, categoria_id)
+VALUES
+('Nueva, 2025, 24 cm aprox.', true, CURDATE(), 'Zenitsu.png', 'Agatsuma Zenitsu - Grandista - Another Ver., Metallic Color ver. (Bandai Namco Amusement, Bandai Spirits)', 35000, 15, 5),
+('Nueva, 2025, 15 cm aprox.', true, CURDATE(), 'Giyuu.png', 'Tomioka Giyuu - Grandista (Bandai Spirits)', 33000, 15, 5),
+('Sin caja, 2025, 24 cm aprox.', true, CURDATE(), 'Rengoku.png', 'Rengoku Kyoujurou - Grandista (Bandai Spirits)', 35000, 17, 5);
