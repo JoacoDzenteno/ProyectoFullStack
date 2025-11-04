@@ -1,9 +1,11 @@
+// En: src/servicios/api.js (EL CÓDIGO CORRECTO)
 import axios from 'axios';
 
-const API_URL = 'http://localhost:8080/api';
-
 const api = axios.create({
-  baseURL: API_URL,
+  // La URL base de tu backend
+  baseURL: 'http://localhost:8080/api', 
+  
+  // ¡CRÍTICO! Esto envía la cookie de sesión (JSESSIONID)
   withCredentials: true 
 });
 
