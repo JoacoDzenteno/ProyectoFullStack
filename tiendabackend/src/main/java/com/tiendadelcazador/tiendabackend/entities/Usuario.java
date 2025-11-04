@@ -1,3 +1,4 @@
+// En: entities/Usuario.java (CORREGIDO Y BLINDADO)
 package com.tiendadelcazador.tiendabackend.entities;
 
 import java.util.Collection;
@@ -23,14 +24,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-
 @Table(name = "usuario", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"email"}),
     @UniqueConstraint(columnNames = {"rut"})
 })
-
 @Entity
-public class Usuario implements UserDetails{
+public class Usuario implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,8 +58,14 @@ public class Usuario implements UserDetails{
     private Boolean estado;
     private String fechaCreacion;
 
+    // --- MÉTODOS DE USERDETAILS BLINDADOS ---
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
+        // ARREGLO 1: Si 'rol' es nulo, asigna una lista vacía.
+        if (this.rol == null || this.rol.isEmpty()) {
+            return List.of();
+        }
         return List.of(new SimpleGrantedAuthority(this.rol));
     }
 
@@ -86,7 +91,7 @@ public class Usuario implements UserDetails{
 
     @Override
     public boolean isEnabled() {
-        return this.estado; 
+        // ARREGLO 2: Si 'estado' (Boolean) es nulo, trátalo como false (deshabilitado).
+        return this.estado != null && this.estado;
     }
 }
-
