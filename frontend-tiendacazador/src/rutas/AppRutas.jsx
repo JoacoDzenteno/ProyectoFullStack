@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+
 
 // Componentes
 import { Inicio } from '../vistas/Inicio.jsx';
@@ -7,7 +8,7 @@ import { PanelAdmin } from '../vistas/PanelAdmin.jsx';
 import { InicioSesion } from '../vistas/InicioSesion.jsx';
 
 // Admin Usuarios
-import { ListaUsuarios } from '../vistas/admin/usuarios/ListaUsuarios.jsx';
+import  ListaUsuarios  from '../vistas/admin/usuarios/ListaUsuarios.jsx';
 import { FormularioUsuario } from '../vistas/admin/usuarios/FormularioUsuario.jsx';
 // Admin Productos
 import { ListaProductos } from '../vistas/admin/productos/ListaProductos.jsx';
@@ -43,10 +44,16 @@ export function AppRutas() {
 
         {/* ADMIN */}
         <Route element={<RutaProtegida />}>
+          <Route path="/admin" element={<Navigate to="/admin/usuarios" replace />} />
           <Route path="/admin/panel" element={<PanelAdmin />} />
+
           <Route path="/admin/usuarios" element={<ListaUsuarios />} />
           <Route path="/admin/usuarios/crear" element={<FormularioUsuario />} />
           <Route path="/admin/usuarios/editar/:id" element={<FormularioUsuario />} />
+        
+
+
+
           <Route path="/admin/productos" element={<ListaProductos />} />
           <Route path="/admin/productos/crear" element={<FormularioProducto />} />
           <Route path="/admin/productos/editar/:id" element={<FormularioProducto />} />

@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-// ¡Ruta PÚBLICA! (Coincide con SecurityConfig)
 @RequestMapping("/api/productos")
-// ¡CORS CORREGIDO! (Permite las cookies de sesión)
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+// @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class ProductoRestController {
 
     @Autowired
@@ -22,7 +20,6 @@ public class ProductoRestController {
     // Endpoint para la tienda pública (Productos.jsx)
     @GetMapping
     public ResponseEntity<List<Producto>> getAllProductos() {
-        // (Aquí podríamos filtrar por estado=true)
         return ResponseEntity.ok(productoService.getAllProductos());
     }
 

@@ -1,11 +1,9 @@
 package com.tiendadelcazador.tiendabackend.repositories;
 
-import java.util.Optional; 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 import com.tiendadelcazador.tiendabackend.entities.Usuario;
 
-public interface UsuarioRepository extends CrudRepository<Usuario, Long>{
-
-    Optional<Usuario> findByEmail(String email);
-    Optional<Usuario> findByRut(String rut);
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+    Usuario findByEmail(String email);
+    boolean existsByEmail(String email);
 }

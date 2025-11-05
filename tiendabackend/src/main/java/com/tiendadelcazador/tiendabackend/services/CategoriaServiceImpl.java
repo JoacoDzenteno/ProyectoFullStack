@@ -1,10 +1,9 @@
-// En: services/CategoriaServiceImpl.java
 package com.tiendadelcazador.tiendabackend.services;
 
 import com.tiendadelcazador.tiendabackend.entities.Categoria;
-import com.tiendadelcazador.tiendabackend.entities.Producto; // <-- Importa Producto
+import com.tiendadelcazador.tiendabackend.entities.Producto; 
 import com.tiendadelcazador.tiendabackend.repositories.CategoriaRepository;
-import com.tiendadelcazador.tiendabackend.repositories.ProductoRepository; // <-- Importa ProductoRepository
+import com.tiendadelcazador.tiendabackend.repositories.ProductoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -15,7 +14,7 @@ public class CategoriaServiceImpl implements CategoriaService {
     @Autowired
     private CategoriaRepository categoriaRepository;
     
-    // Inyectamos el repo de productos para el filtro
+  
     @Autowired
     private ProductoRepository productoRepository; 
 
@@ -40,8 +39,6 @@ public class CategoriaServiceImpl implements CategoriaService {
         if (!categoriaRepository.existsById(id)) {
             throw new RuntimeException("Categoría no encontrada: " + id);
         }
-        // (Opcional: antes de borrar, deberíamos verificar que no haya productos 
-        // usando esta categoría, pero por ahora la borramos directamente)
         categoriaRepository.deleteById(id);
     }
 
@@ -49,13 +46,11 @@ public class CategoriaServiceImpl implements CategoriaService {
     public Categoria updateCategoria(Long id, Categoria categoria) {
         Categoria c = getCategoriaById(id);
         c.setNombre(categoria.getNombre());
-        // (Añade aquí otros campos si los tuviera, ej: c.setDescripcion(...))
         return categoriaRepository.save(c);
     }
 
     @Override
     public List<Producto> getProductosByCategoriaId(Long id) {
-        // Usamos el método que acabamos de crear en el ProductoRepository
         return productoRepository.findByCategoriaId(id);
     }
 }

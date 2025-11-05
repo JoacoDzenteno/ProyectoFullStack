@@ -1,123 +1,128 @@
-import React, { useState, useEffect } from 'react';
-import { LayoutAdmin } from '../../../componentes/estructura/LayoutAdmin/LayoutAdmin.jsx'; 
-import { Table, Button, Spinner, Alert } from 'react-bootstrap'; 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrash, faUserPlus } from '@fortawesome/free-solid-svg-icons';
-import { LinkContainer } from 'react-router-bootstrap';
-import './ListaUsuarios.css';
-import { getUsuariosServicio, deleteUsuarioServicio } from '../../../servicios/usuarioServicio.js';
+import React, { useEffect, useState } from "react";
+import { LayoutAdmin } from "../../../componentes/estructura/LayoutAdmin/LayoutAdmin.jsx";
+import { Table, Button, Alert, Spinner } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import {
+  getUsuariosServicio,
+  deleteUsuarioServicio,
+  desactivarUsuarioServicio,
+} from "../../../servicios/usuarioServicio.js";
 
-export function ListaUsuarios() {
-  
+export default function ListaUsuarios() {
   const [usuarios, setUsuarios] = useState([]);
-  const [cargando, setCargando] = useState(true);
-  const [mensaje, setMensaje] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [msg, setMsg] = useState(null);
+  const navigate = useNavigate();
 
-  const cargarUsuarios = async () => {
+  const cargar = async () => {
+    setLoading(true);
+    setMsg(null);
     try {
-      setCargando(true);
-      const datos = await getUsuariosServicio();
-      
-      setUsuarios(Array.isArray(datos) ? datos : []);
-
-    } catch (error) {
-      console.error("Error al cargar usuarios:", error);
-      setMensaje('Error al cargar usuarios.');
-      
-      setUsuarios([]); 
-
+      const data = await getUsuariosServicio();
+      setUsuarios(Array.isArray(data) ? data : []);
+    } catch (e) {
+      setMsg({ type: "error", text: "Error al cargar usuarios." });
     } finally {
-      setCargando(false);
+      setLoading(false);
     }
   };
-  
+
   useEffect(() => {
-    cargarUsuarios();
-  }, []); 
+    cargar();
+  }, []);
 
-  const manejarDelete = async (id) => {
-    const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar al usuario con ID ${id}?`);
-    
-    if (confirmar) {
-      try {
-        setMensaje(''); 
-        await deleteUsuarioServicio(id); 
-
-        if (!Array.isArray(usuarios)) {
-          console.error("Estado 'usuarios' corrompido. Forzando recarga.");
-          return;
-        }
-
-        const nuevaLista = usuarios.filter(u => u.id !== id);
-        setUsuarios(nuevaLista);
-        setMensaje('Usuario eliminado exitosamente.');
-
-      } catch (error) {
-        console.error("Error al borrar usuario:", error);
-        setMensaje('Error al eliminar el usuario.');
-      }
+  const eliminar = async (id) => {
+    if (!confirm("¿Eliminar usuario definitivamente?")) return;
+    try {
+      await deleteUsuarioServicio(id);
+      setMsg({ type: "success", text: "Usuario eliminado." });
+      cargar();
+    } catch {
+      setMsg({ type: "error", text: "No se pudo eliminar." });
     }
   };
 
+  const desactivar = async (id) => {
+    if (!confirm("¿Desactivar usuario?")) return;
+    try {
+      await desactivarUsuarioServicio(id);
+      setMsg({ type: "success", text: "Usuario actualizado." });
+      cargar();
+    } catch {
+      setMsg({ type: "error", text: "No se pudo actualizar." });
+    }
+  };
 
   return (
     <LayoutAdmin titulo="Gestión de Usuarios">
-      
-      <LinkContainer to="/admin/usuarios/crear">
-        <Button variant="success" className="mb-3">
-          <FontAwesomeIcon icon={faUserPlus} className="me-2" />
-          Crear Nuevo Usuario
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h2 className="m-0">Usuarios</h2>
+        <Button onClick={() => navigate("/admin/usuarios/crear")} variant="success">
+          Crear Usuario
         </Button>
-      </LinkContainer>
+      </div>
 
-      {mensaje && <Alert variant={mensaje.includes('Error') ? 'danger' : 'success'}>{mensaje}</Alert>}
+      {msg && (
+        <Alert variant={msg.type === "error" ? "danger" : "success"}>{msg.text}</Alert>
+      )}
 
-      <Table striped bordered hover responsive>
-        <thead className="table-dark">
-          <tr>
-            <th># ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Rol</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {cargando ? (
-            <tr>
-              <td colSpan="5" className="text-center">
-                <Spinner animation="border" role="status">
-                  <span className="visually-hidden">Cargando...</span>
-                </Spinner>
-              </td>
-            </tr>
-          ) : (
-            (usuarios || []).map((usuario) => (
-              <tr key={usuario.id}>
-                <td>{usuario.id}</td>
-                <td>{usuario.nombre}</td>
-                <td>{usuario.email}</td>
-                <td>{usuario.rol}</td>
-                <td>
-
-                <LinkContainer to={`/admin/usuarios/editar/${usuario.id}`}>
-                  <Button variant="warning" size="sm" className="me-2">
-                    <FontAwesomeIcon icon={faEdit} />
-                  </Button>
-                </LinkContainer>
-                  <Button 
-                    variant="danger" 
-                    size="sm"
-                    onClick={() => manejarDelete(usuario.id)}
-                  >
-                    <FontAwesomeIcon icon={faTrash} />
-                  </Button>
-                </td>
+      {loading ? (
+        <div className="py-4 d-flex justify-content-center">
+          <Spinner animation="border" />
+        </div>
+      ) : usuarios.length === 0 ? (
+        <Alert className="mt-3">No hay usuarios.</Alert>
+      ) : (
+        <div className="table-responsive">
+          <Table striped bordered hover>
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Nombre</th>
+                <th>Email</th>
+                <th>RUT</th>
+                <th>Rol</th>
+                <th>Estado</th>
+                <th style={{ width: 220 }}>Acciones</th>
               </tr>
-            ))
-          )}
-        </tbody>
-      </Table>
+            </thead>
+            <tbody>
+              {usuarios.map((u) => (
+                <tr key={u.id}>
+                  <td>{u.id}</td>
+                  <td>{u.nombre} {u.apellidos}</td>
+                  <td>{u.email}</td>
+                  <td>{u.rut}</td>
+                  <td>{u.rol}</td>
+                  <td>{u.estado ? "Activo" : "Inactivo"}</td>
+                  <td style={{ whiteSpace: "nowrap" }}>
+                    <Button
+                      size="sm"
+                      onClick={() => navigate(`/admin/usuarios/editar/${u.id}`)}
+                    >
+                      Editar
+                    </Button>{" "}
+                    <Button
+                      size="sm"
+                      variant="warning"
+                      onClick={() => desactivar(u.id)}
+                    >
+                      (Des)Activar
+                    </Button>{" "}
+                    <Button
+                      size="sm"
+                      variant="danger"
+                      onClick={() => eliminar(u.id)}
+                    >
+                      Borrar
+                    </Button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
+        </div>
+      )}
     </LayoutAdmin>
   );
 }

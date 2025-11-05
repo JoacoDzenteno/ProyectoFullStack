@@ -1,13 +1,27 @@
-// En: src/servicios/usuarioServicio.js
+import api from "./api";
 
-import api from './api'; // ¡Importamos el axios centralizado!
+const normalizarPayload = (datos = {}, { isUpdate = false } = {}) => {
+  const limpio = {
+    nombre: datos.nombre?.trim(),
+    apellidos: datos.apellidos?.trim(),
+    email: datos.email?.trim(),
+    rut: datos.rut?.trim(),
+    direccion: datos.direccion?.trim() || null,
+    region: datos.region?.trim() || null,
+    comuna: datos.comuna?.trim() || null,
+    rol: (datos.rol || 'USER').toUpperCase(),               
+    estado: typeof datos.estado === 'boolean' ? datos.estado : true,
+  };
 
-// (Todos estos son servicios de Admin y usan la cookie de sesión)
+  if (!isUpdate) {
+     limpio.password = datos.password;
+  } else if (datos.password) {
+    limpio.password = datos.password;
+  }
 
-/**
- * (Admin) Obtiene la lista de todos los usuarios
- * GET /api/admin/usuarios
- */
+  return limpio;
+};
+
 export const getUsuariosServicio = async () => {
   try {
     const response = await api.get('/admin/usuarios');
@@ -18,29 +32,20 @@ export const getUsuariosServicio = async () => {
   }
 };
 
-/**
- * (Admin) Obtiene un solo usuario por su ID
- * GET /api/admin/usuarios/:id
- */
 export const getUsuarioPorIdServicio = async (id) => {
   try {
     const response = await api.get(`/admin/usuarios/${id}`);
     return response.data;
-  } catch (error)
- {
+  } catch (error) {
     console.error(`Error al obtener usuario ${id}:`, error.response?.data || error.message);
     throw error;
   }
 };
 
-/**
- * (Admin) Crea un nuevo usuario
- * POST /api/admin/usuarios
- */
 export const crearUsuarioServicio = async (datosUsuario) => {
   try {
-    // datosUsuario debe coincidir con la entidad Usuario.java
-    const response = await api.post('/admin/usuarios', datosUsuario);
+    const body = normalizarPayload(datosUsuario, { isUpdate: false });
+    const response = await api.post('/auth/registro', body);
     return response.data;
   } catch (error) {
     console.error("Error al crear usuario:", error.response?.data || error.message);
@@ -48,13 +53,10 @@ export const crearUsuarioServicio = async (datosUsuario) => {
   }
 };
 
-/**
- * (Admin) Actualiza un usuario
- * PUT /api/admin/usuarios/:id
- */
 export const updateUsuarioServicio = async (id, datosUsuario) => {
   try {
-    const response = await api.put(`/admin/usuarios/${id}`, datosUsuario);
+    const body = normalizarPayload(datosUsuario, { isUpdate: true });
+    const response = await api.put(`/admin/usuarios/${id}`, body);
     return response.data;
   } catch (error) {
     console.error(`Error al actualizar usuario ${id}:`, error.response?.data || error.message);
@@ -62,24 +64,16 @@ export const updateUsuarioServicio = async (id, datosUsuario) => {
   }
 };
 
-/**
- * (Admin) Borra un usuario
- * DELETE /api/admin/usuarios/:id
- */
 export const deleteUsuarioServicio = async (id) => {
   try {
     const response = await api.delete(`/admin/usuarios/${id}`);
-    return response.data; // Devuelve 204 No Content
+    return response.data; 
   } catch (error) {
     console.error(`Error al borrar usuario ${id}:`, error.response?.data || error.message);
     throw error;
   }
 };
 
-/**
- * (Admin) Desactiva un usuario
- * PATCH /api/admin/usuarios/:id/desactivar
- */
 export const desactivarUsuarioServicio = async (id) => {
   try {
     const response = await api.patch(`/admin/usuarios/${id}/desactivar`);

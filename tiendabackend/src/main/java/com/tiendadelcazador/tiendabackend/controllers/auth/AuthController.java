@@ -1,18 +1,17 @@
-// En: controllers/auth/AuthController.java
 package com.tiendadelcazador.tiendabackend.controllers.auth;
 
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.security.core.Authentication;
+import java.util.Collection;
 
-import com.tiendadelcazador.tiendabackend.controllers.auth.LoginRequest; // (Asegúrate de importar tus DTOs)
-import com.tiendadelcazador.tiendabackend.controllers.auth.RegistroRequest; // (Asegúrate de importar tus DTOs)
+import jakarta.servlet.http.HttpServletRequest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;               
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
 import com.tiendadelcazador.tiendabackend.entities.Usuario;
 import com.tiendadelcazador.tiendabackend.services.auth.AuthService;
 
@@ -20,33 +19,49 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    // --- ¡CORREGIDO! ---
-    // El método 'login' SÓLO recibe el 'LoginRequest'
-    @PostMapping(value = "/login")
-    public ResponseEntity<Usuario> login(@RequestBody LoginRequest request) {
-        // Llama al servicio, que es el que SÍ hace la autenticación
-        return ResponseEntity.ok(authService.login(request));
+    @PostMapping("/login")
+    public ResponseEntity<Usuario> login(@RequestBody LoginRequest request, HttpServletRequest httpReq) {
+        Usuario usuario = authService.login(request);
+        if (usuario == null) return ResponseEntity.status(401).build();
+
+        Collection<? extends GrantedAuthority> authorities = usuario.getAuthorities();
+
+        var authToken = new UsernamePasswordAuthenticationToken(usuario, null, authorities);
+
+        SecurityContext ctx = SecurityContextHolder.createEmptyContext();
+        ctx.setAuthentication(authToken);
+        SecurityContextHolder.setContext(ctx);
+        httpReq.getSession(true).setAttribute("SPRING_SECURITY_CONTEXT", ctx);
+
+        usuario.setPassword(null); 
+        return ResponseEntity.ok(usuario);
     }
 
-    @PostMapping(value = "/registro")
+    @PostMapping("/registro")
     public ResponseEntity<Usuario> registro(@RequestBody RegistroRequest request) {
-        return ResponseEntity.ok(authService.registro(request));
+        Usuario nuevo = authService.registro(request);
+        if (nuevo != null) nuevo.setPassword(null);
+        return ResponseEntity.ok(nuevo);
     }
-    
-    @GetMapping(value = "/perfil")
-    public ResponseEntity<Usuario> getPerfil(Authentication authentication) { // <-- ¡Aquí SÍ va!
-        
-        if (authentication == null || !authentication.isAuthenticated() || "anonymousUser".equals(authentication.getPrincipal())) {
-            return ResponseEntity.status(401).build(); 
-        }
-        
-        Usuario usuario = (Usuario) authentication.getPrincipal();
-        return ResponseEntity.ok(usuario);
+
+    @GetMapping("/perfil")
+    public ResponseEntity<Usuario> getPerfil(Authentication auth) {
+        if (auth == null || !auth.isAuthenticated()) return ResponseEntity.status(401).build();
+        Usuario u = (Usuario) auth.getPrincipal();
+        u.setPassword(null);
+        return ResponseEntity.ok(u);
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest req) {
+        var session = req.getSession(false);
+        if (session != null) session.invalidate();
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.noContent().build();
     }
 }
