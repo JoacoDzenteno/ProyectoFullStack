@@ -14,7 +14,6 @@ export function ListaProductos() {
   const [cargando, setCargando] = useState(true);
   const [mensaje, setMensaje] = useState('');
 
-  // (El 'cargarProductos' y 'useEffect' están perfectos)
   const cargarProductos = async () => {
     try {
       setCargando(true);
@@ -33,7 +32,6 @@ export function ListaProductos() {
     cargarProductos();
   }, []);
 
-  // (El 'manejarDelete' está perfecto)
   const manejarDelete = async (id) => {
     const confirmar = window.confirm(`¿Estás seguro de que deseas eliminar el producto con ID ${id}?`);
     
@@ -42,7 +40,6 @@ export function ListaProductos() {
         setMensaje(''); 
         await deleteProductoServicio(id);
         
-        // (La lógica de filtrado optimista está perfecta)
         const nuevaLista = productos.filter(p => p.id !== id);
         setProductos(nuevaLista);
         setMensaje('Producto eliminado exitosamente.');
@@ -57,7 +54,6 @@ export function ListaProductos() {
   return (
     <LayoutAdmin titulo="Gestión de Productos">
       
-      {/* (Botón 'Crear' - Perfecto) */}
       <LinkContainer to="/admin/productos/crear">
         <Button variant="success" className="mb-3">
           <FontAwesomeIcon icon={faPlus} className="me-2" />
@@ -95,14 +91,11 @@ export function ListaProductos() {
                   {producto.stock}
                 </td>
                 
-                {/* --- ¡AQUÍ ESTÁ LA CORRECCIÓN! --- */}
                 <td>
-                  {/* Verificamos que 'categoria' exista antes de mostrar 'nombre' */}
                   {producto.categoria ? producto.categoria.nombre : 'Sin Categoría'}
                 </td>
 
                 <td>
-                  {/* (Botones de acción - Perfectos) */}
                   <LinkContainer to={`/admin/productos/editar/${producto.id}`}>
                   <Button variant="warning" size="sm" className="me-2">
                     <FontAwesomeIcon icon={faEdit} />

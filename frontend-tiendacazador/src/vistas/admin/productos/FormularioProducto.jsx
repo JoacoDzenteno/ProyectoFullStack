@@ -4,13 +4,11 @@ import { Form, Button, Card, Alert, Spinner, Row, Col } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
 import './FormularioProducto.css'; 
 
-// --- MODIFICADO ---
-// Importamos los 4 servicios que necesitamos
 import { 
   crearProductoServicio, 
   updateProductoServicio, 
   getProductoPorIdServicio, 
-  getCategoriasServicio // <-- ¡NUEVO!
+  getCategoriasServicio
 } from '../../../servicios/productoServicio.js';
 
 export function FormularioProducto() {
@@ -18,40 +16,30 @@ export function FormularioProducto() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  // Estados del formulario
   const [nombre, setNombre] = useState('');
   const [descripcion, setDescripcion] = useState('');
   const [precio, setPrecio] = useState(0);
   const [stock, setStock] = useState(0);
   const [imagen, setImagen] = useState('');
   
-  // --- MODIFICADO ---
-  // El estado 'categoria' ahora guarda solo el ID
   const [categoriaId, setCategoriaId] = useState(''); 
   
-  // --- NUEVO ---
-  // Nuevo estado para guardar la lista del dropdown
   const [listaCategorias, setListaCategorias] = useState([]);
 
-  // Estados de UI
   const [error, setError] = useState('');
   const [cargando, setCargando] = useState(false);
   
-  // (CargandoDatos ahora también manejará la carga de categorías)
+
   const [cargandoDatos, setCargandoDatos] = useState(false);
 
-  // --- MODIFICADO ---
-  // Efecto para cargar datos (para "Editar" o "Crear")
   useEffect(() => {
     
     const cargarDatos = async () => {
       setCargandoDatos(true);
       try {
-        // 1. Siempre cargamos la lista de categorías
         const categoriasData = await getCategoriasServicio();
         setListaCategorias(categoriasData || []);
 
-        // 2. Si hay un 'id', cargamos los datos de ESE producto
         if (id) {
           const datos = await getProductoPorIdServicio(id);
           setNombre(datos.nombre);
@@ -60,7 +48,6 @@ export function FormularioProducto() {
           setStock(datos.stock);
           setImagen(datos.imagen || '');
           
-          // Guardamos solo el ID de la categoría del producto
           if (datos.categoria) {
             setCategoriaId(datos.categoria.id);
           }
@@ -74,7 +61,7 @@ export function FormularioProducto() {
     };
     
     cargarDatos();
-  }, [id]); // Depende de 'id'
+  }, [id]); 
 
   
   const handleSubmit = async (e) => {
@@ -86,8 +73,6 @@ export function FormularioProducto() {
       return;
     }
     
-    // --- MODIFICADO ---
-    // El 'id' de la categoría no puede estar vacío
     if (!categoriaId) {
       setError('Debe seleccionar una categoría.');
       return;
@@ -96,17 +81,14 @@ export function FormularioProducto() {
     setCargando(true);
 
     try {
-      // --- MODIFICADO ---
-      // Construimos el objeto que el backend (Java) espera
       const datosProducto = { 
         nombre, 
         descripcion, 
         precio, 
         stock, 
         imagen, 
-        // Enviamos la categoría como un objeto anidado
         categoria: { 
-          id: parseInt(categoriaId, 10) // Aseguramos que sea un número
+          id: parseInt(categoriaId, 10) 
         } 
       };
       
@@ -127,7 +109,6 @@ export function FormularioProducto() {
 
   const tituloPagina = id ? "Editar Producto" : "Crear Nuevo Producto";
 
-  // Spinner de carga principal
   if (cargandoDatos) {
     return (
       <LayoutAdmin titulo="Cargando...">
@@ -145,7 +126,6 @@ export function FormularioProducto() {
           <Form onSubmit={handleSubmit}>
             {error && <Alert variant="danger">{error}</Alert>}
 
-            {/* --- (Campos Nombre, Imagen, Descripción - Sin cambios) --- */}
             <Form.Group className="mb-3" controlId="formNombre">
               <Form.Label>Nombre del Producto</Form.Label>
               <Form.Control
@@ -177,7 +157,6 @@ export function FormularioProducto() {
               />
             </Form.Group>
 
-            {/* --- (Campos Precio y Stock - Sin cambios) --- */}
             <Row>
               <Col md={6}>
                 <Form.Group className="mb-3" controlId="formPrecio">
@@ -203,28 +182,22 @@ export function FormularioProducto() {
               </Col>
             </Row>
 
-            {/* --- ¡CAMBIO GRANDE AQUÍ! --- */}
-            {/* Reemplazamos el <input> de categoría por un <select> */}
             <Form.Group className="mb-3" controlId="formCategoria">
               <Form.Label>Categoría</Form.Label>
               <Form.Select
-                value={categoriaId} // El valor es el ID
-                onChange={(e) => setCategoriaId(e.target.value)} // Guardamos el ID
+                value={categoriaId}
+                onChange={(e) => setCategoriaId(e.target.value)} 
                 required
               >
-                {/* Opción por defecto */}
                 <option value="">Seleccione una categoría</option>
                 
-                {/* Mapeamos la lista de categorías cargada */}
-                {listaCategorias.map(cat => (
+                  {listaCategorias.map(cat => (
                   <option key={cat.id} value={cat.id}>
                     {cat.nombre}
                   </option>
                 ))}
               </Form.Select>
             </Form.Group>
-
-            {/* --- (Botones - Sin cambios) --- */}
             <Button variant="success" type="submit" disabled={cargando}>
               {cargando ? 'Guardando...' : 'Guardar Producto'}
             </Button>

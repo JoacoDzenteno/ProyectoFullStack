@@ -1,4 +1,3 @@
-// En: entities/Usuario.java (CORREGIDO Y BLINDADO)
 package com.tiendadelcazador.tiendabackend.entities;
 
 import java.util.Collection;
@@ -8,13 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,63 +30,45 @@ public class Usuario implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String rut;
-    
-    @Column(nullable = false)
-    private String nombre;
-    
-    @Column(nullable = false)
-    private String apellidos;
-    
-    @Column(nullable = false)
-    private String email; 
-    
-    @Column(nullable = false)
-    private String password;
-    
+    @Column(nullable = false)  private String rut;
+    @Column(nullable = false)  private String nombre;
+    @Column(nullable = false)  private String apellidos;
+    @Column(nullable = false)  private String email;
+
+    @JsonIgnore                 
+    @Column(nullable = false)   private String password;
+
     private String direccion;
     private String region;
     private String comuna;
 
-    private String rol; 
+   
+    private String rol;
+
+ 
     private Boolean estado;
     private String fechaCreacion;
 
-    // --- MÉTODOS DE USERDETAILS BLINDADOS ---
-
+  
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        // ARREGLO 1: Si 'rol' es nulo, asigna una lista vacía.
-        if (this.rol == null || this.rol.isEmpty()) {
-            return List.of();
-        }
-        return List.of(new SimpleGrantedAuthority(this.rol));
+        if (rol == null || rol.isBlank()) return List.of();
+        // Spring espera "ROLE_*"
+        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.toUpperCase()));
     }
 
     @Override
-    public String getUsername() {
-        return this.email; 
-    }
+    public String getUsername() { return email; }
 
     @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
+    public boolean isAccountNonExpired() { return true; }
 
     @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
+    public boolean isAccountNonLocked() { return true; }
 
     @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
+    public boolean isCredentialsNonExpired() { return true; }
 
     @Override
-    public boolean isEnabled() {
-        // ARREGLO 2: Si 'estado' (Boolean) es nulo, trátalo como false (deshabilitado).
-        return this.estado != null && this.estado;
-    }
+    public boolean isEnabled() { return Boolean.TRUE.equals(estado); }
 }

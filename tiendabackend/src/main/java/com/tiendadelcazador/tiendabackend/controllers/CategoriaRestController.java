@@ -1,24 +1,20 @@
-// En: controllers/CategoriaRestController.java
 package com.tiendadelcazador.tiendabackend.controllers;
 
 import com.tiendadelcazador.tiendabackend.entities.Categoria;
-import com.tiendadelcazador.tiendabackend.entities.Producto; // <-- Importa Producto
+import com.tiendadelcazador.tiendabackend.entities.Producto; 
 import com.tiendadelcazador.tiendabackend.services.CategoriaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*; // <-- Cambia a *
-
+import org.springframework.web.bind.annotation.*; 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/categorias") 
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+// @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class CategoriaRestController {
 
     @Autowired
     private CategoriaService categoriaService;
-
-    // --- ENDPOINTS PÚBLICOS (Para la tienda) ---
 
     @GetMapping
     public ResponseEntity<List<Categoria>> getAllCategorias() {
@@ -30,20 +26,11 @@ public class CategoriaRestController {
         return ResponseEntity.ok(categoriaService.getCategoriaById(id));
     }
     
-    // Endpoint de filtro: "Dame los productos de esta categoría"
-    @GetMapping("/{id}/productos")
+     @GetMapping("/{id}/productos")
     public ResponseEntity<List<Producto>> getProductosPorCategoria(@PathVariable Long id) {
         return ResponseEntity.ok(categoriaService.getProductosByCategoriaId(id));
     }
 
-    // --- ENDPOINTS DE ADMIN (Protegidos por SecurityConfig) ---
-    // (Debemos moverlos a /api/admin/categorias)
-
-    // ¡¡¡NOTA!!!
-    // Por ahora los dejamos aquí, pero para que la seguridad funcione,
-    // deberíamos crear un "CategoriaAdminController.java"
-    // con la ruta "/api/admin/categorias" para estos 3:
-    
     @PostMapping
     public ResponseEntity<Categoria> createCategoria(@RequestBody Categoria categoria) {
         return ResponseEntity.ok(categoriaService.createCategoria(categoria));

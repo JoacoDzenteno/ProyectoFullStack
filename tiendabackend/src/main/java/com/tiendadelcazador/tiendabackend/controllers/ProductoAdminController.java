@@ -1,4 +1,3 @@
-// En: controllers/ProductoAdminController.java
 package com.tiendadelcazador.tiendabackend.controllers;
 
 import com.tiendadelcazador.tiendabackend.entities.Producto;
@@ -8,10 +7,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-// ¡Ruta de ADMIN! (Coincide con SecurityConfig)
 @RequestMapping("/api/admin/productos") 
-// ¡CORS CORREGIDO!
-@CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
+
+// @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class ProductoAdminController {
 
     @Autowired
