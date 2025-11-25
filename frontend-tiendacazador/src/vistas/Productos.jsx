@@ -57,7 +57,10 @@ export function Productos() {
                 <div className="caja" key={producto.id}>
                   <div className="imagenPr">
                     <Link to={`/producto/${producto.id}`}>
-                      <img src={producto.imagen} alt={producto.nombre} />
+                        <img 
+                        src={`http://localhost:8080/images/${producto.imagen}`} 
+                        alt={producto.nombre} 
+                        />
                     </Link>
                     
                     <div className="iconos">

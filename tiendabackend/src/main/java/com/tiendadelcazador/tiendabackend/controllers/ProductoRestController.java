@@ -35,4 +35,6 @@ public class ProductoRestController {
         Integer stock = productoService.getStockById(id);
         return ResponseEntity.ok(stock);
     }
+
+    
 }

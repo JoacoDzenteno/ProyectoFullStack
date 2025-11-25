@@ -1,5 +1,9 @@
 package com.tiendadelcazador.tiendabackend.entities;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,5 +35,8 @@ public class Producto {
     @ManyToOne
     @JoinColumn(name = "categoria_id", nullable = false)
     private Categoria categoria;
+
+    @ElementCollection
+    private List<String> imagenes = new ArrayList<>();
 
 }

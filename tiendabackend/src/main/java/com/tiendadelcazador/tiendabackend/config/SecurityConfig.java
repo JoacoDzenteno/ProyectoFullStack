@@ -31,6 +31,7 @@ public class SecurityConfig {
         ).permitAll()
 
         .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+        .requestMatchers("/images/**").permitAll()
 
         .requestMatchers("/api/auth/**").permitAll()
         .requestMatchers(HttpMethod.POST, "/api/auth/registro").permitAll()

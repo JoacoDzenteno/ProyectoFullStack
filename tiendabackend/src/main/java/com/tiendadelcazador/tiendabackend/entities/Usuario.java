@@ -1,5 +1,6 @@
 package com.tiendadelcazador.tiendabackend.entities;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class Usuario implements UserDetails {
 
  
     private Boolean estado;
-    private String fechaCreacion;
+    private LocalDate fechaCreacion;
 
   
     @Override
