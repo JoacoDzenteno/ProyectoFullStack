@@ -15,6 +15,7 @@ com\tiendadelcazador\tiendabackend\config\ApplicationConfig.class
 com\tiendadelcazador\tiendabackend\services\UsuarioServiceImpl.class
 com\tiendadelcazador\tiendabackend\TiendabackendApplication.class
 com\tiendadelcazador\tiendabackend\dto\EstadisticasDTO.class
+com\tiendadelcazador\tiendabackend\dto\UsuarioUpdateDTO.class
 com\tiendadelcazador\tiendabackend\repositories\UsuarioRepository.class
 com\tiendadelcazador\tiendabackend\controllers\CategoriaRestController.class
 com\tiendadelcazador\tiendabackend\controllers\EstadisticasController.class

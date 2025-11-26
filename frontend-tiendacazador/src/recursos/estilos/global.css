@@ -400,31 +400,53 @@ hr {
 
 /* DetalleProducto*/
 
-#detallesProd{
+#detallesProd {
   display: flex;
-  justify-content: space-evenly;
+  align-items: flex-start;
+  gap: 60px;                 /* separa imagen de la descripción */
   backdrop-filter: blur(5px);
-  margin-top: 50px;
-  margin-bottom: 50px;
-  margin-left: 80px;
-  margin-right: 80px;
+  margin: 50px 80px;
 }
-#detallesProd .imagenProducto{
-  width: 30%;
-  margin-right: 50px;
-  margin-top: 2.5rem;
-  margin-bottom: 2.5rem;
-  margin-left: 10rem;
+
+#detallesProd .imagenProducto {
+  display: flex;             /* imagen principal + miniaturas lado a lado */
+  align-items: flex-start;
+  gap: 16px;
+  width: 40%;
+  margin: 2.5rem 0;
   border-radius: 2rem;
 }
-.grupoImg{
+
+
+/* contenedor de la imagen principal */
+.imagenPrincipalWrapper img {
+  border-radius: 2rem;
+  display: block;
+}
+
+/* columna de miniaturas al lado derecho (cascada) */
+.miniaturasCascada {   
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 10px;
 }
-.filaImg{
-  flex-basis: 24%;
+
+/* estilo de cada miniatura de la cascada */
+.miniaturaCascada {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 12px;
   cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
+.miniaturaCascada:hover {
+  transform: translateX(-4px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+}
+
 .descripcionProducto {
   display: flex;
   flex-direction: column;
@@ -433,6 +455,7 @@ hr {
   text-align: center;
   padding: 40px 20px;
   margin-top: 50px;
+  margin-left: 500 px;
 } 
 .descripcionProducto h6 {
   color: #000000;

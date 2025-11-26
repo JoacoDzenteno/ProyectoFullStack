@@ -71,3 +71,33 @@ export const getEstadisticasServicio = async () => {
     throw error;
   }
 };
+
+export const subirImagenProductoServicio = async (id, archivo) => {
+  try {
+    const formData = new FormData();
+    formData.append("file", archivo);
+
+    const response = await api.post(`/admin/productos/${id}/imagen`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error(`Error al subir imagen del producto ${id}:`, error.response?.data || error.message);
+    throw error;
+  }
+};
+
+export const eliminarImagenProductoServicio = async (id, nombreImagen) => {
+  try {
+    const response = await api.delete(`/admin/productos/${id}/imagen`, {
+      params: { nombre: nombreImagen },
+    });
+    return response.data;
+  } catch (error) {
+    console.error(`Error al eliminar imagen del producto ${id}:`, error.response?.data || error.message);
+    throw error;
+  }
+};

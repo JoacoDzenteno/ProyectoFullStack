@@ -1,6 +1,7 @@
 package com.tiendadelcazador.tiendabackend.services;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -37,8 +38,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         if (usuario.getEstado() == null) {
             usuario.setEstado(true);
         }
-        if (usuario.getFechaCreacion() == null || usuario.getFechaCreacion().isBlank()) {
-            usuario.setFechaCreacion(new SimpleDateFormat(DATE_FMT).format(new Date()));
+        if (usuario.getFechaCreacion() == null){
+            usuario.setFechaCreacion(LocalDate.now());
         }
 
         // Hash password

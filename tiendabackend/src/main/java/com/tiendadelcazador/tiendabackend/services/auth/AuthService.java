@@ -1,5 +1,7 @@
 package com.tiendadelcazador.tiendabackend.services.auth;
 
+import java.time.LocalDate;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +38,11 @@ public class AuthService {
         u.setRol("USER");
         u.setEstado(true);
         u.setPassword(passwordEncoder.encode(request.getPassword()));
+        u.setComuna(request.getComuna());
+        u.setDireccion(request.getDireccion());
+        u.setRegion(request.getRegion());
+        u.setFechaCreacion(LocalDate.now());
+
         return usuarioRepository.save(u);
     }
 }
