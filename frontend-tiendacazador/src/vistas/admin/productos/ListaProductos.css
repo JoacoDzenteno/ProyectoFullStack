@@ -1,0 +1,17 @@
+.table {
+  font-size: 1.4rem;
+  vertical-align: middle;
+}
+
+.table tbody td:last-child {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.stock-critico {
+  color: #a00;
+  font-weight: bold;
+  background-color: #fdd;
+}

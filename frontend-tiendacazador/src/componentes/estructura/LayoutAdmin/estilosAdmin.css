@@ -1,0 +1,148 @@
+/*body*/
+.contenedor-admin {
+  background: #f5f5f5;
+  color: #333;
+  display: flex;
+  min-height: 100vh; 
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/*BarraLateral*/
+.barraLateral {
+  width: 220px;
+  background: #fff;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  padding: 15px 10px;
+  flex-shrink: 0; 
+}
+
+/* Logo de la barra lateral */
+.barraLateral .logo {
+  font-size: auto;
+  color:  #000000;
+  font-weight: bolder;
+  text-decoration: none;
+  padding: auto;
+  display: block;
+}
+.barraLateral .logo span {
+  color: #ff0000;
+}
+
+/* Menú de navegación lateral */
+.menu a {
+  display: block;
+  padding: 12px 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 1.5rem; 
+  border-radius: 6px;
+  transition: background 0.3s;
+  margin-bottom: 5px;
+}
+.menu a:hover {
+  background: #eee;
+}
+.menu a.titulo {
+  background: #f0f0f0;
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.perfil {
+  display: flex; 
+  align-items: center; 
+  gap: 10px; 
+  padding: 10px;
+  border-top: 1px solid #ddd; 
+  border: 1px solid black;
+}
+.perfil img {
+  width: 40px; 
+  height: 40px;
+  object-fit: contain;
+}
+.perfil a {
+  text-decoration: none;
+  font-size: 1.4rem;
+  color: #333;
+  font-weight: bold;
+}
+.perfil:hover {
+  background: #eee;
+}
+
+.contenido-principal {
+  flex-grow: 1; 
+  display: flex;
+  flex-direction: column;
+}
+
+/* Barra de arriba */
+.barraArriba {
+display: flex;
+justify-content: space-between;
+align-items: center;
+background: #fafafa;
+padding: 20px;
+border-bottom: 1px solid #ddd;
+position: sticky;
+top: 0;
+z-index: 10;
+}
+.barraArriba h1 {
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin: 0; 
+}
+
+/* Contenido de cada panel del admin */
+.layout-admin-contenido {
+  padding: 2rem;
+}
+
+/* Dashboard*/
+/* Botones admin */
+.botones-admin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin: 40px 0;
+}
+.btn-admin {
+  padding: 18px 60px;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+.btn-admin:hover {
+  background: linear-gradient(135deg, #0056b3, #003d80);
+  transform: scale(1.07);
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.3);
+}
+
+/* Usuarios */
+.table {
+  font-size: 1.4rem; 
+  vertical-align: middle; 
+}
+
+.table tbody td:last-child {
+  text-align: center;
+  white-space: nowrap; 
+}
+
+.table .spinner-border {
+  color: var(--colorUso); 
+}
