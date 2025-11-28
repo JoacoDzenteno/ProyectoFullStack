@@ -53,9 +53,13 @@ public class Usuario implements UserDetails {
   
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if (rol == null || rol.isBlank()) return List.of();
-        // Spring espera "ROLE_*"
-        return List.of(new SimpleGrantedAuthority("ROLE_" + rol.toUpperCase()));
+        if (rol == null || rol.isBlank()) {
+            return List.of();
+        }
+
+        String normalized = rol.trim().toUpperCase(); 
+
+        return List.of(new SimpleGrantedAuthority("ROLE_" + normalized));
     }
 
     @Override

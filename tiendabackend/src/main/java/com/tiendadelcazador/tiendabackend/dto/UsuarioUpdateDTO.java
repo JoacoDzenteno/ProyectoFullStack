@@ -1,4 +1,3 @@
-// En: controllers/admin/dto/UsuarioUpdateDTO.java
 package com.tiendadelcazador.tiendabackend.dto;
 
 import jakarta.validation.constraints.Pattern;
@@ -19,6 +18,6 @@ public class UsuarioUpdateDTO {
   private String comuna;
   
    @Pattern(regexp = "ADMIN|USER", message = "Rol inválido")
-  private String rol;      // ADMIN o USER
+  private String rol;      
   private Boolean estado; 
 }

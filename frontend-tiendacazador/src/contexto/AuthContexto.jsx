@@ -1,58 +1,42 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import { verificarPerfil, logoutServicio } from '../servicios/authServicio.js';
+import { createContext, useContext, useState, useEffect } from 'react';
 
-const AuthContexto = createContext();
-
-export const useAuth = () => {
-  return useContext(AuthContexto);
-};
+const AuthContext = createContext();
+export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
-  const [usuario, setUsuario] = useState(null);
-  
-  const [cargando, setCargando] = useState(true);
+  const [auth, setAuth] = useState({
+    token: localStorage.getItem('token') || null,
+    refreshToken: localStorage.getItem('refreshToken') || null,
+    usuario: JSON.parse(localStorage.getItem('usuario') || 'null'),
+  });
 
-  useEffect(() => {
-    
-    const verificarSesion = async () => {
-      try {
-        const data = await verificarPerfil();
-        
-        setUsuario(data);
-      } catch (error) {
-        setUsuario(null);
-      } finally {
-        setCargando(false);
-      }
-    };
-    
-    verificarSesion();
-  }, []); 
+  const [cargando, setCargando] = useState(false);
 
-  const login = (datosUsuario) => {
-    setUsuario(datosUsuario);
+
+  const login = (datos) => {
+    setAuth({
+      token: datos.token,
+      refreshToken: datos.refreshToken,
+      usuario: datos.usuario,
+    });
+
+    if (datos.token) localStorage.setItem('token', datos.token);
+    if (datos.refreshToken)
+      localStorage.setItem('refreshToken', datos.refreshToken);
+    if (datos.usuario)
+      localStorage.setItem('usuario', JSON.stringify(datos.usuario));
   };
 
-  const logout = async () => {
-    try {
-      await logoutServicio(); 
-    } catch (error) {
-      console.error("Error al cerrar sesión en el backend:", error);
-    } finally {
-      setUsuario(null);
-    }
-  };
-
-  const valor = {
-    usuario,
-    cargando,
-    login,
-    logout
+  const logout = () => {
+    setAuth({ token: null, refreshToken: null, usuario: null });
+    localStorage.removeItem('token');
+    localStorage.removeItem('refreshToken');
+    localStorage.removeItem('usuario');
   };
 
   return (
-    <AuthContexto.Provider value={valor}>
-      {!cargando && children}
-    </AuthContexto.Provider>
+    <AuthContext.Provider value={{ ...auth, login, logout, cargando }}>
+      {children}
+    </AuthContext.Provider>
   );
 }

@@ -44,14 +44,24 @@ public class ProductoServiceImpl implements ProductoService {
 
     @Override
     public Producto updateProducto(Long id, Producto producto) {
-        Producto existingProducto = getProductoById(id);
-        existingProducto.setNombre(producto.getNombre());
-        existingProducto.setDescripcion(producto.getDescripcion());
-        existingProducto.setPrecio(producto.getPrecio());
-        existingProducto.setStock(producto.getStock());
-        existingProducto.setImagen(producto.getImagen());
-        existingProducto.setCategoria(producto.getCategoria());
-        return productoRepository.save(existingProducto);
+        Producto existing = getProductoById(id);
+
+        existing.setNombre(producto.getNombre());
+        existing.setDescripcion(producto.getDescripcion());
+        existing.setPrecio(producto.getPrecio());
+        existing.setStock(producto.getStock());
+        existing.setCategoria(producto.getCategoria());
+
+
+        if (producto.getImagen() != null) {
+            existing.setImagen(producto.getImagen());
+        }
+
+        if (producto.getImagenes() != null && !producto.getImagenes().isEmpty()) {
+            existing.setImagenes(producto.getImagenes());
+        }
+
+        return productoRepository.save(existing);
     }
 
     @Override

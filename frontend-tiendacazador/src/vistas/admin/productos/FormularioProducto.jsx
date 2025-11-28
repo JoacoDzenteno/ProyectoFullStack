@@ -23,10 +23,8 @@ export function FormularioProducto() {
   const [precio, setPrecio] = useState(0);
   const [stock, setStock] = useState(0);
 
-  // principal en BD
   const [imagen, setImagen] = useState('');
 
-  // lista de imágenes (todas las que devuelve el backend)
   const [imagenesSecundarias, setImagenesSecundarias] = useState([]);
 
   const [categoriaId, setCategoriaId] = useState('');
@@ -36,9 +34,9 @@ export function FormularioProducto() {
   const [cargando, setCargando] = useState(false);
   const [cargandoDatos, setCargandoDatos] = useState(false);
 
-  // archivo seleccionado como nueva principal
+
   const [archivoPrincipal, setArchivoPrincipal] = useState(null);
-  // archivos para nuevas secundarias
+
   const [archivosSecundarios, setArchivosSecundarios] = useState([]);
 
   useEffect(() => {
@@ -58,7 +56,6 @@ export function FormularioProducto() {
           setImagen(datos.imagen || '');
 
           if (Array.isArray(datos.imagenes)) {
-            // guardo todas pero filtro principal para miniaturas
             setImagenesSecundarias(
               datos.imagenes.filter(img => img !== datos.imagen)
             );
@@ -102,7 +99,7 @@ export function FormularioProducto() {
       descripcion,
       precio,
       stock,
-      imagen, // el backend lo puede actualizar al subir principal
+      imagen,
       categoria: {
         id: parseInt(categoriaId, 10)
       }
@@ -112,15 +109,12 @@ export function FormularioProducto() {
       let productoGuardado;
 
       if (id) {
-        // EDITAR
         productoGuardado = await updateProductoServicio(id, datosProducto);
 
-        // subir nueva principal si hay archivo
         if (archivoPrincipal) {
           await subirImagenProductoServicio(id, archivoPrincipal, true);
         }
 
-        // subir secundarias si hay archivos
         if (archivosSecundarios.length > 0) {
           for (const file of archivosSecundarios) {
             await subirImagenProductoServicio(id, file, false);
@@ -128,15 +122,12 @@ export function FormularioProducto() {
         }
 
       } else {
-        // CREAR
         productoGuardado = await crearProductoServicio(datosProducto);
 
         if (productoGuardado?.id) {
-          // primero principal (si hay)
           if (archivoPrincipal) {
             await subirImagenProductoServicio(productoGuardado.id, archivoPrincipal, true);
           }
-          // luego secundarias
           if (archivosSecundarios.length > 0) {
             for (const file of archivosSecundarios) {
               await subirImagenProductoServicio(productoGuardado.id, file, false);
@@ -154,7 +145,6 @@ export function FormularioProducto() {
     }
   };
 
-  // 🗑 eliminar imagen (principal o secundaria)
   const handleEliminarImagen = async (nombreImg) => {
     if (!id) return;
 
@@ -164,12 +154,10 @@ export function FormularioProducto() {
     try {
       await eliminarImagenProductoServicio(id, nombreImg);
 
-      // si era principal, la limpio y el backend ya decidirá otra
       if (nombreImg === imagen) {
         setImagen('');
       }
 
-      // la quito del arreglo de secundarias
       setImagenesSecundarias(prev => prev.filter(img => img !== nombreImg));
 
     } catch (err) {
@@ -256,7 +244,7 @@ export function FormularioProducto() {
                       style={{ marginRight: '10px', textAlign: 'center' }}
                     >
                       <img
-                        src={`http://localhost:8080/images/${img}`}
+                        src={`http://localhost:8080/images/${img}`} 
                         alt="miniatura"
                         style={{
                           width: '80px',

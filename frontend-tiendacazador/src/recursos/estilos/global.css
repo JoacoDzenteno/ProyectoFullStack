@@ -403,13 +403,13 @@ hr {
 #detallesProd {
   display: flex;
   align-items: flex-start;
-  gap: 60px;                 /* separa imagen de la descripción */
+  gap: 60px;                 
   backdrop-filter: blur(5px);
   margin: 50px 80px;
 }
 
 #detallesProd .imagenProducto {
-  display: flex;             /* imagen principal + miniaturas lado a lado */
+  display: flex;            
   align-items: flex-start;
   gap: 16px;
   width: 40%;
@@ -418,20 +418,19 @@ hr {
 }
 
 
-/* contenedor de la imagen principal */
 .imagenPrincipalWrapper img {
   border-radius: 2rem;
   display: block;
 }
 
-/* columna de miniaturas al lado derecho (cascada) */
+
 .miniaturasCascada {   
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-/* estilo de cada miniatura de la cascada */
+
 .miniaturaCascada {
   width: 80px;
   height: 80px;

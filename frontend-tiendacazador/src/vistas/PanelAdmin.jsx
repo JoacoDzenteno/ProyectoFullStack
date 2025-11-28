@@ -79,6 +79,9 @@ export function PanelAdmin() {
           <Link to="/admin/usuarios" className="btn-admin">
             Ver Usuarios
           </Link>
+          <Link to="/admin/pedidos" className="btn-admin">
+          Ver Compras
+          </Link> 
         </div>
       </div>
     </LayoutAdmin>

@@ -4,12 +4,25 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
 
-import { useCarrito } from '../../../contexto/CarritoContexto';
+import { useCarrito } from '../../../contexto/CarritoContexto.jsx';
+import { useAuth } from '../../../contexto/AuthContexto.jsx';
+import { useNavigate } from 'react-router-dom';
 
 export function BarraNavegacion() {
-  
   const { carrito } = useCarrito();
+  const { usuario, logout } = useAuth();
+  const navigate = useNavigate();
+
   const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
+
+  const handleLogout = () => {
+    logout();          
+    navigate('/');     
+  };
+
+  const tituloUsuario = usuario
+    ? (usuario.nombre ? `${usuario.nombre}` : usuario.email)
+    : null;
 
   return (
     <Navbar 
@@ -39,17 +52,48 @@ export function BarraNavegacion() {
           </Nav>
 
           <Nav className="ms-auto">
-            <NavDropdown 
-              title={<FontAwesomeIcon icon={faUser} />} 
+            <NavDropdown
+              title={
+                <>
+                  <FontAwesomeIcon icon={faUser} />
+                  {usuario && (
+                    <span className="ms-2">
+                      {tituloUsuario}
+                    </span>
+                  )}
+                </>
+              }
               id="menu-usuario-dropdown"
-              align="end" 
+              align="end"
             >
-              <LinkContainer to="/login">
-                <NavDropdown.Item>Iniciar Sesión</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to="/registro">
-                <NavDropdown.Item>Registro</NavDropdown.Item>
-              </LinkContainer>
+              {!usuario && (
+                <>
+                  <LinkContainer to="/login">
+                    <NavDropdown.Item>Iniciar Sesión</NavDropdown.Item>
+                  </LinkContainer>
+                  <LinkContainer to="/registro">
+                    <NavDropdown.Item>Registro</NavDropdown.Item>
+                  </LinkContainer>
+                </>
+              )}
+
+              {usuario && (
+                <>
+                  <LinkContainer to="/perfil">
+                    <NavDropdown.Item>Mi Perfil</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <LinkContainer to="/pedidos">
+                    <NavDropdown.Item>Mis pedidos</NavDropdown.Item>
+                  </LinkContainer>
+
+                  <NavDropdown.Divider />
+
+                  <NavDropdown.Item onClick={handleLogout}>
+                    Cerrar sesión
+                  </NavDropdown.Item>
+                </>
+              )}
             </NavDropdown>
 
             <LinkContainer to="/carrito">

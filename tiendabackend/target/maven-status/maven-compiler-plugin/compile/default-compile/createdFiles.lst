@@ -25,5 +25,6 @@ com\tiendadelcazador\tiendabackend\entities\Usuario.class
 com\tiendadelcazador\tiendabackend\entities\Categoria.class
 com\tiendadelcazador\tiendabackend\services\EstadisticasService.class
 com\tiendadelcazador\tiendabackend\services\ProductoServiceImpl.class
+com\tiendadelcazador\tiendabackend\config\WebConfig.class
 com\tiendadelcazador\tiendabackend\controllers\auth\RegistroRequest$RegistroRequestBuilder.class
 com\tiendadelcazador\tiendabackend\services\UsuarioService.class

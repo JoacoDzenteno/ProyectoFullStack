@@ -26,6 +26,10 @@ import { ProductoEspecifico } from '../vistas/ProductoEspecifico.jsx';
 import { Registro } from '../vistas/Registro.jsx';
 import { Carrito } from '../vistas/Carrito.jsx';
 
+import { Pedidos } from '../vistas/Pedidos.jsx';
+import { PerfilCliente } from '../vistas/PerfilCliente.jsx';
+import { ListaPedidosAdmin } from '../vistas/admin/Pedidos/ListaPedidosAdmin.jsx';
+
 
 export function AppRutas() {
   return (
@@ -39,8 +43,10 @@ export function AppRutas() {
         <Route path="/blogs" element={<Blogs/>} />
         <Route path="/productos" element={<Productos />} />
         <Route path="/producto/:id" element={<ProductoEspecifico />} />
-        <Route path="/registro" element={<Registro />} />
+        <Route path="/registro" element={<Registro />} />        
         <Route path="/carrito" element={<Carrito />} />
+        <Route path="/perfil" element={<PerfilCliente />} />
+        <Route path="/pedidos" element={<Pedidos />} />
 
         {/* ADMIN */}
         <Route element={<RutaProtegida />}>
@@ -50,6 +56,7 @@ export function AppRutas() {
           <Route path="/admin/usuarios" element={<ListaUsuarios />} />
           <Route path="/admin/usuarios/crear" element={<FormularioUsuario />} />
           <Route path="/admin/usuarios/editar/:id" element={<FormularioUsuario />} />
+          <Route path="/admin/pedidos" element={<ListaPedidosAdmin />} />
         
 
 

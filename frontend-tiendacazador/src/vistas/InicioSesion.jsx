@@ -8,33 +8,33 @@ import { PiePagina } from '../componentes/estructura/PiePagina/PiePagina.jsx';
 import './InicioSesion.css';
 
 export function InicioSesion() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  
- 
-  const [error, setError] = useState(''); 
-  const [cargando, setCargando] = useState(false); 
-
-  const { login } = useAuth(); 
-  const navigate = useNavigate(); 
+  const { login, cargando } = useAuth();
+  const navigate = useNavigate();
 
   const manejarLogin = async (e) => {
-    e.preventDefault(); 
-    setError('');
-    setCargando(true); 
+    e.preventDefault();
+    setError("");
 
     try {
-      const datosUsuario = await loginServicio(email, password);
-      
-      login(datosUsuario); 
-      navigate('/admin/panel'); 
+      const datos = await loginServicio(email, password);
 
+      login(datos);
+
+      navigate('/admin/panel');
     } catch (errorCapturado) {
-      
-      console.error("Error en login:", errorCapturado.message);
-      setError(errorCapturado.message); 
-      setCargando(false); 
+      console.error('Error en login:', errorCapturado);
+
+      const mensaje =
+        errorCapturado.response?.data?.mensaje ||
+        errorCapturado.response?.data ||
+        errorCapturado.message ||
+        'Error al iniciar sesión';
+
+      setError(mensaje);
     }
   };
 
@@ -49,16 +49,16 @@ export function InicioSesion() {
                 <Card.Title className="text-center h2 mb-4">
                   Iniciar Sesión
                 </Card.Title>
-                
+
                 <Form onSubmit={manejarLogin}>
                   {error && <Alert variant="danger">{error}</Alert>}
-                  
+
                   <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Label>Correo Electrónico</Form.Label>
-                    <Form.Control 
-                      type="email" 
-                      placeholder="Correo electrónico" 
-                      required 
+                    <Form.Control
+                      type="email"
+                      placeholder="Correo electrónico"
+                      required
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
@@ -66,23 +66,23 @@ export function InicioSesion() {
 
                   <Form.Group className="mb-4" controlId="formBasicPassword">
                     <Form.Label>Contraseña</Form.Label>
-                    <Form.Control 
-                      type="password" 
-                      placeholder="Contraseña" 
-                      required 
+                    <Form.Control
+                      type="password"
+                      placeholder="Contraseña"
+                      required
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
                   </Form.Group>
 
                   <div className="d-grid">
-                    <Button 
-                      variant="primary" 
-                      type="submit" 
-                      size="lg" 
+                    <Button
+                      variant="primary"
+                      type="submit"
+                      size="lg"
                       disabled={cargando}
                     >
-                      {cargando ? 'Ingresando...' : 'Ingresar'}
+                      {cargando ? "Ingresando..." : "Ingresar"}
                     </Button>
                   </div>
                 </Form>

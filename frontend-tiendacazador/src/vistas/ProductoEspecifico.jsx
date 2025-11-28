@@ -25,15 +25,13 @@ export function ProductoEspecifico() {
         const datos = await getProductoPorIdServicio(id);
         setProducto(datos);
 
-        // 1) si viene imagen principal → usarla
         if (datos.imagen) {
           setImagenPrincipal(`http://localhost:8080/images/${datos.imagen}`);
         } 
-        // 2) si no hay imagen principal pero sí hay lista de imagenes → usar la primera
         else if (Array.isArray(datos.imagenes) && datos.imagenes.length > 0) {
           setImagenPrincipal(`http://localhost:8080/images/${datos.imagenes[0]}`);
         } else {
-          setImagenPrincipal(''); // sin imagen
+          setImagenPrincipal(''); 
         }
 
       } catch (err) {
@@ -93,7 +91,6 @@ export function ProductoEspecifico() {
       <main className="contenido-principal">
 
         <section id="detallesProd" className="prod1">
-          {/* Columna izquierda: imagen principal + cascada */}
           <div className="imagenProducto">
             <div className="imagenPrincipalWrapper">
               {imagenPrincipal ? (
@@ -126,7 +123,7 @@ export function ProductoEspecifico() {
                 {producto.imagenes.map((img, index) => (
                   <img
                     key={index}
-                    src={`http://localhost:8080/images/${img}`}
+                    src={`http://localhost:8080/images/${img}`} 
                     alt="miniatura"
                     onClick={() => cambiarImagen(img)}
                     className="miniaturaCascada"
@@ -136,7 +133,6 @@ export function ProductoEspecifico() {
             )}
           </div>
 
-          {/* Columna derecha: info del producto */}
           <div className="descripcionProducto">
 
             <h6>{producto.categoria && producto.categoria.nombre}</h6>

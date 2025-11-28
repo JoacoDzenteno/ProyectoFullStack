@@ -16,7 +16,6 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
 
-        // Convierte la ruta relativa en una absoluta
         String absolutePath = Paths.get(uploadDir).toFile().getAbsolutePath();
 
         registry.addResourceHandler("/images/**")

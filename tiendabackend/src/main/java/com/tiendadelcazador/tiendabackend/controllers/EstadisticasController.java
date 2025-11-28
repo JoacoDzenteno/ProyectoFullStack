@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 @RestController
 @RequestMapping("/api/admin")
 @RequiredArgsConstructor
-// @CrossOrigin(origins = "http://localhost:5173", allowCredentials = "true")
 public class EstadisticasController {
 
     private final EstadisticasService estadisticasService;
