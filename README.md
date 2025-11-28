@@ -1,5 +1,5 @@
 # ProyectoFullStack
-Instrucciones de instalación. 
+Instrucciones de instalación y ejecución. 
 1. Instala Node.js 20+ (incluye npm).
 2. Clona el repo y ábrelo en VS Code.
 3. Instala dependencias: npm install (ctrl + ñ para la consola en vs code).
