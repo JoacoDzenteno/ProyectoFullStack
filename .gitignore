@@ -2,6 +2,5 @@ tiendabackend/target/
 frontend-tiendacazador/node_modules/
 *.log
 *.webm
-*.mp4
 *.jar
 *.zip
